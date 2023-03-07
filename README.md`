@@ -1,5 +1,15 @@
-# Log-a-Tron
-Automated and easy-to-use amateur radio logging software
+# Log-a-Tron (Logatron)
+Automated and easy-to-use amateur radio logging software.
+
+# Context
+
+## Requirements
+The creation of this software originated from the frustration over existing solutions that were complicated to use, lacked a good user experience, or had flaws in them. At the moment, Logatron is developed to fit my specific needs, which are:
+- Automatic logging of a QSO made in WSJT-X
+- Manual log input
+- Automat log up- and download from and to LotW
+- Connection to OmniRig
+- Automatic retrieval of QSO partner data from online sources
 
 ## Where does the name come from?
 The name for this software was chosen from a selection provided by ChatGPT. The initial prompt was:
