@@ -19,3 +19,7 @@ In ChatGPT's own words:
 > The name "Log-a-Tron" is a play on words, combining "log" (as in a radio logbook) with "-a-Tron" (as in a fictional robotic or electronic device). The "-a-Tron" suffix has been used in various fictional contexts to give a sense of advanced or futuristic technology. For example, there is a character in the Transformers toy line and animated series named Megatron, and in the Marvel Comics universe, there is a character named Iron Man who has a suit of armor called the Hulkbuster Iron Man Armor.
 >
 > In the context of an amateur radio software, the name "Log-a-Tron" suggests a high-tech, automated, and efficient logging tool for radio operators.
+
+# TODO
+- Remove dependency from OmniRig executable for COM interop
+- Add CI
