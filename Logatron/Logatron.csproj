@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="resources\digital.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resources\digital.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.71.2" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.Aero" Version="4.71.2" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.Expression" Version="4.71.2" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.Metro" Version="4.71.2" />
+    <PackageReference Include="Mapsui" Version="3.0.2" />
+    <PackageReference Include="Mapsui.Wpf" Version="3.0.2" />
+    <PackageReference Include="System.Reactive" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HamRadioLib\HamRadioLib.csproj" />
+  </ItemGroup>
+
+</Project>
