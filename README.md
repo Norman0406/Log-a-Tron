@@ -7,7 +7,7 @@ Automated and easy-to-use amateur radio logging software.
 The creation of this software originated from the frustration over existing solutions that were complicated to use, lacked a good user experience, or had flaws in them. At the moment, Logatron is developed to fit my specific needs, which are:
 - Automatic logging of a QSO made in WSJT-X
 - Manual log input
-- Automat log up- and download from and to LotW
+- Automatic log up- and download to and from LotW
 - Connection to OmniRig
 - Automatic retrieval of QSO partner data from online sources
 
