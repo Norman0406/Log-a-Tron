@@ -6,7 +6,7 @@ namespace Logatron.Views
     public partial class RadioView : UserControl
     {
         public static readonly DependencyProperty StatusProperty = DependencyProperty.Register(
-            nameof(StatusProperty), typeof(string), typeof(RadioView), new PropertyMetadata(null));
+            nameof(Status), typeof(string), typeof(RadioView), new PropertyMetadata(null));
 
         public string Status
         {
@@ -43,8 +43,8 @@ namespace Logatron.Views
 
         public RadioView()
         {
-            InitializeComponent();
             DataContext = this;
+            InitializeComponent();
         }
     }
 }

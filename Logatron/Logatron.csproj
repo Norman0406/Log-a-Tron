@@ -10,10 +10,14 @@
 
   <ItemGroup>
     <None Remove="resources\digital.ttf" />
+    <None Remove="resources\green_led.png" />
+    <None Remove="resources\red_led.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="resources\digital.ttf" />
+    <Resource Include="resources\green_led.png" />
+    <Resource Include="resources\red_led.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,13 +25,19 @@
     <PackageReference Include="Dirkster.AvalonDock.Themes.Aero" Version="4.71.2" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.Expression" Version="4.71.2" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.Metro" Version="4.71.2" />
-    <PackageReference Include="Mapsui" Version="3.0.2" />
-    <PackageReference Include="Mapsui.Wpf" Version="3.0.2" />
+    <PackageReference Include="Mapsui" Version="4.0.0-beta.8" />
+    <PackageReference Include="Mapsui.Wpf" Version="4.0.0-beta.8" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HamRadioLib\HamRadioLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="TogglImage.cs">
+      <Generator>MSBuild:Compile</Generator>
+    </Compile>
   </ItemGroup>
 
 </Project>
