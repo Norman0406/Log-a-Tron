@@ -37,6 +37,7 @@
     <PackageReference Include="Dirkster.AvalonDock.Themes.Metro" Version="4.71.2" />
     <PackageReference Include="Mapsui" Version="4.0.0-beta.8" />
     <PackageReference Include="Mapsui.Wpf" Version="4.0.0-beta.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.3" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
