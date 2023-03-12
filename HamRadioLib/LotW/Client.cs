@@ -40,7 +40,7 @@ namespace HamRadioLib.LotW
                 Query = query.ToString()
             };
 
-            HttpResponseMessage response = _client.GetAsync(builder.Uri.PathAndQuery).Result;
+            HttpResponseMessage response = await _client.GetAsync(builder.Uri.PathAndQuery).ConfigureAwait(false);
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
@@ -54,7 +54,7 @@ namespace HamRadioLib.LotW
                 throw new Exception("Response is not ADIF");
             }
 
-            string contentString = await content.ReadAsStringAsync();
+            string contentString = await content.ReadAsStringAsync().ConfigureAwait(false);
 
             return Adif.Parser.Parse(contentString);
         }

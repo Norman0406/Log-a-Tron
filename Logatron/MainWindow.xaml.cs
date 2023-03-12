@@ -26,10 +26,10 @@ namespace Logatron
             });
 
             // initialize lotw client
-            var credentials = Util.CredentialManager.LoadCredentials("LotW");
-            if (credentials != null)
+            var credential = Util.CredentialManager.LoadCredential("LotW");
+            if (credential != null)
             {
-                HamRadioLib.LotW.Client lotwClient = new(credentials.UserName, credentials.Password);
+                HamRadioLib.LotW.Client lotwClient = new(credential.UserName, credential.Password);
                 var adifFile = lotwClient.Query().Result;
             }
         }
