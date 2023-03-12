@@ -1,6 +1,9 @@
 # Log-a-Tron (Logatron)
 Automated and easy-to-use amateur radio logging software.
 
+# Status
+![CI](https://github.com/github/docs/actions/workflows/ci.yml/badge.svg)
+
 # Context
 
 ## Requirements
