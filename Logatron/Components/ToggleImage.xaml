@@ -5,6 +5,8 @@
     <Grid>
         <Image Source="{Binding OffImage}" RenderOptions.BitmapScalingMode="HighQuality"
                Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Normal}"/>
+        <Image Source="{Binding OffImage}" RenderOptions.BitmapScalingMode="HighQuality"
+               Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Normal}"/>
         <Image Source="{Binding OnImage}" RenderOptions.BitmapScalingMode="HighQuality"
                Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverted}"/>
     </Grid>

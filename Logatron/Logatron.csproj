@@ -9,15 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="resources\digital.ttf" />
-    <None Remove="resources\green_led.png" />
-    <None Remove="resources\red_led.png" />
+    <None Remove="Resources\blue_light.png" />
+    <None Remove="Resources\digital.ttf" />
+    <None Remove="Resources\gray_light.png" />
+    <None Remove="Resources\green_led.png" />
+    <None Remove="Resources\green_light.png" />
+    <None Remove="Resources\purple_light.png" />
+    <None Remove="Resources\red_led.png" />
+    <None Remove="Resources\red_light.png" />
+    <None Remove="Resources\yellow_light.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\digital.ttf" />
-    <Resource Include="resources\green_led.png" />
-    <Resource Include="resources\red_led.png" />
+    <Resource Include="Resources\blue_light.png" />
+    <Resource Include="Resources\digital.ttf" />
+    <Resource Include="Resources\gray_light.png" />
+    <Resource Include="Resources\green_light.png" />
+    <Resource Include="Resources\purple_light.png" />
+    <Resource Include="Resources\red_light.png" />
+    <Resource Include="Resources\yellow_light.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,9 +42,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HamRadioLib\HamRadioLib.csproj" />
+    <ProjectReference Include="..\OmniRig1Lib\OmniRig1Lib.csproj" />
+    <ProjectReference Include="..\OmniRig2Lib\OmniRig2Lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Components\RadioStatusIndicator.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="TogglImage.cs">
       <Generator>MSBuild:Compile</Generator>
     </Compile>

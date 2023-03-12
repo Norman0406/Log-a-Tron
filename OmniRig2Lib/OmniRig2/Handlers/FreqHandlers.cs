@@ -1,7 +1,7 @@
 ﻿using OmniRig;
 using System.Reactive.Subjects;
 
-namespace HamRadioLib.OmniRig.Handlers
+namespace HamRadioLib.OmniRig2.Handlers
 {
     internal class OmniRigFreqHandler
     {

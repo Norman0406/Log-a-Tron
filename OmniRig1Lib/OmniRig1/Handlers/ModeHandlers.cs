@@ -1,39 +1,40 @@
 ﻿using OmniRig;
+using System;
 using System.Reactive.Subjects;
 
-namespace HamRadioLib.OmniRig.Handlers
+namespace HamRadioLib.OmniRig1.Handlers
 {
     internal class OmniRigModeHandler
     {
-        public static void Register(IDictionary<int, Action<IRigX>> handlers, ISubject<Mode> mode)
+        public static void Register(IDictionary<int, Action<IRigX>> handlers, ISubject<Types.Mode> mode)
         {
             void handler(IRigX rig)
             {
                 switch (rig.Mode)
                 {
                     case RigParamX.PM_CW_U:
-                        mode.OnNext(Mode.CwUsb);
+                        mode.OnNext(Types.Mode.CwUsb);
                         break;
                     case RigParamX.PM_CW_L:
-                        mode.OnNext(Mode.CwLsb);
+                        mode.OnNext(Types.Mode.CwLsb);
                         break;
                     case RigParamX.PM_SSB_U:
-                        mode.OnNext(Mode.SsbUsb);
+                        mode.OnNext(Types.Mode.SsbUsb);
                         break;
                     case RigParamX.PM_SSB_L:
-                        mode.OnNext(Mode.SsbLsb);
+                        mode.OnNext(Types.Mode.SsbLsb);
                         break;
                     case RigParamX.PM_DIG_U:
-                        mode.OnNext(Mode.DigitalUsb);
+                        mode.OnNext(Types.Mode.DigitalUsb);
                         break;
                     case RigParamX.PM_DIG_L:
-                        mode.OnNext(Mode.DigitalLsb);
+                        mode.OnNext(Types.Mode.DigitalLsb);
                         break;
                     case RigParamX.PM_AM:
-                        mode.OnNext(Mode.AM);
+                        mode.OnNext(Types.Mode.AM);
                         break;
                     case RigParamX.PM_FM:
-                        mode.OnNext(Mode.FM);
+                        mode.OnNext(Types.Mode.FM);
                         break;
                 }
             }

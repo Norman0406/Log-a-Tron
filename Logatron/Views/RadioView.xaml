@@ -17,23 +17,18 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0">Status</Label>
-        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Status}" FontSize="30" Style="{StaticResource lblDigital}" />
+        <Label Grid.Row="0" Grid.Column="0">TX</Label>
+        <components:RadioStatusIndicator Grid.Row="1" Grid.Column="0" Width="30" Height="30"
+                                         Disabled="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Disabled}"
+                                         Tx="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Tx}" />
 
-        <Label Grid.Row="0" Grid.Column="1">TX</Label>
-        <components:ToggleImage Grid.Row="1" Grid.Column="1" Width="30" Height="30"
-                                OnOff="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Tx}"
-                                OffImage="{StaticResource GreenLed}"
-                                OnImage="{StaticResource RedLed}" />
+        <Label Grid.Row="0" Grid.Column="1">Frequency</Label>
+        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Frequency}" FontSize="30" Style="{StaticResource lblDigital}" />
 
-        <Label Grid.Row="0" Grid.Column="2">Frequency</Label>
-        <Label Grid.Row="1" Grid.Column="2" Content="{Binding Frequency}" ContentStringFormat="{}{0} MHz" FontSize="30" Style="{StaticResource lblDigital}" />
-
-        <Label Grid.Row="0" Grid.Column="3">Mode</Label>
-        <Label Grid.Row="1" Grid.Column="3" Content="{Binding Mode}" FontSize="30" Style="{StaticResource lblDigital}" />
+        <Label Grid.Row="0" Grid.Column="2">Mode</Label>
+        <Label Grid.Row="1" Grid.Column="2" Content="{Binding Mode}" FontSize="30" Style="{StaticResource lblDigital}" />
     </Grid>
 </UserControl>

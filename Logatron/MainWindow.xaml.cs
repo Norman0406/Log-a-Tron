@@ -15,7 +15,7 @@ namespace Logatron
             InitializeComponent();
             DataContext = this;
 
-            _radioController = new RadioControllerOmniRig(RadioView);
+            _radioController = new RadioControllerOmniRig2(RadioView);
 
             _jtClient = new HamRadioLib.Jt.Client("239.255.255.0", 2237);
 

@@ -5,13 +5,13 @@ namespace Logatron.Views
 {
     public partial class RadioView : UserControl
     {
-        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register(
-            nameof(Status), typeof(string), typeof(RadioView), new PropertyMetadata(null));
+        public static readonly DependencyProperty DisabledProperty = DependencyProperty.Register(
+            nameof(Disabled), typeof(bool), typeof(RadioView), new PropertyMetadata(null));
 
-        public string Status
+        public bool Disabled
         {
-            get { return (string)GetValue(StatusProperty); }
-            set { SetValue(StatusProperty, value); }
+            get { return (bool)GetValue(DisabledProperty); }
+            set { SetValue(DisabledProperty, value); }
         }
 
         public static readonly DependencyProperty TxProperty = DependencyProperty.Register(

@@ -12,10 +12,9 @@ namespace Logatron.Handlers.RadioControllers
         {
             RadioView = radioView;
 
-            radioView.Status = "Unknown";
+            radioView.Disabled = true;
             radioView.Tx = false;
             radioView.Frequency = FrequencyStringFromInteger(0);
-            radioView.Mode = "Unknown";
         }
 
         protected static string FrequencyStringFromInteger(double frequency)

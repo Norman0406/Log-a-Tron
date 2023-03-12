@@ -8,8 +8,9 @@
         <Style x:Key="lblDigital" TargetType="Label">
             <Setter Property="FontFamily" Value="resources/digital.ttf #Digital Counter 7"/>
         </Style>
-        <BitmapImage x:Key="GreenLed" UriSource="Resources/green_led.png" />
-        <BitmapImage x:Key="RedLed" UriSource="Resources/red_led.png" />
+        <BitmapImage x:Key="GreenLight" UriSource="Resources/green_light.png" />
+        <BitmapImage x:Key="RedLight" UriSource="Resources/red_light.png" />
+        <BitmapImage x:Key="GrayLight" UriSource="Resources/gray_light.png" />
         <converters:BooleanToVisibilityConverter 
             x:Key="BooleanToVisibilityConverter"
             True="Collapsed"

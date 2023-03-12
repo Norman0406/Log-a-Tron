@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logatron", "Logatron\Logatr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamRadioLib", "HamRadioLib\HamRadioLib.csproj", "{CDB1D33C-1710-4A53-8942-E1BF165E5E81}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniRig1Lib", "OmniRig1Lib\OmniRig1Lib.csproj", "{79AD99A1-3874-46EE-88B1-39E34BB27712}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniRig2Lib", "OmniRig2Lib\OmniRig2Lib.csproj", "{EF011EBC-4CA4-4B3A-AEDA-1BB55C8C7407}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{CDB1D33C-1710-4A53-8942-E1BF165E5E81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDB1D33C-1710-4A53-8942-E1BF165E5E81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDB1D33C-1710-4A53-8942-E1BF165E5E81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79AD99A1-3874-46EE-88B1-39E34BB27712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79AD99A1-3874-46EE-88B1-39E34BB27712}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79AD99A1-3874-46EE-88B1-39E34BB27712}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79AD99A1-3874-46EE-88B1-39E34BB27712}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF011EBC-4CA4-4B3A-AEDA-1BB55C8C7407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF011EBC-4CA4-4B3A-AEDA-1BB55C8C7407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF011EBC-4CA4-4B3A-AEDA-1BB55C8C7407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF011EBC-4CA4-4B3A-AEDA-1BB55C8C7407}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
