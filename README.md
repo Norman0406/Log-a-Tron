@@ -2,7 +2,7 @@
 Automated and easy-to-use amateur radio logging software.
 
 # Status
-![CI](https://github.com/github/docs/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/Norman0406/Log-a-Tron/actions/workflows/ci.yml/badge.svg)
 
 # Context
 
