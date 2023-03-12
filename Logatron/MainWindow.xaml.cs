@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Logatron.Handlers.RadioControllers;
+using System;
 using System.Windows;
-using Logatron.Handlers.RadioControllers;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Logatron
 {

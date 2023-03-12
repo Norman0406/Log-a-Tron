@@ -13,7 +13,7 @@
         <BitmapImage x:Key="GrayLight" UriSource="Resources/gray_light.png" />
         <converters:BooleanToVisibilityConverter 
             x:Key="BooleanToVisibilityConverter"
-            True="Collapsed"
-            False="Visible" />
+            True="Visible"
+            False="Collapsed" />
     </Application.Resources>
 </Application>

@@ -22,7 +22,11 @@ namespace Logatron.Converters
 
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var direction = (Parameters)Enum.Parse(typeof(Parameters), (string)parameter);
+            var direction = Parameters.Normal;
+            if (parameter != null)
+            {
+                direction = (Parameters)Enum.Parse(typeof(Parameters), (string)parameter);
+            }
 
             var trueValue = direction == Parameters.Normal ? True : False;
             var falseValue = direction == Parameters.Normal ? False : True;
