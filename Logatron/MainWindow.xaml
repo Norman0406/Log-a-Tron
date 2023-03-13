@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:Logatron"
         xmlns:avalonDock="https://github.com/Dirkster99/AvalonDock"
         xmlns:views="clr-namespace:Logatron.Views"
+        xmlns:viewModels="clr-namespace:Logatron.ViewModels"
         mc:Ignorable="d"
         Title="Logatron" Height="800" Width="1200">
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
 
     <Grid x:Name="layoutRoot">
         <Grid.RowDefinitions>
@@ -36,21 +40,11 @@
             
             <LayoutRoot>                
                 <LayoutPanel Orientation="Horizontal">
-                    <LayoutAnchorablePane DockWidth="50">
-                        <LayoutAnchorable x:Name="WinFormsWindow"
-                            Title="WinForms Window"
-                            CanClose="False"
-                            CanHide="False"
-                            ContentId="WinFormsWindow"
-                            ToolTip="My WinForms Tool">
-                        </LayoutAnchorable>
-                    </LayoutAnchorablePane>
-
                     <LayoutPanel Orientation="Vertical">
                         <LayoutAnchorablePaneGroup DockHeight="Auto">
                             <LayoutAnchorablePane>
                                 <LayoutAnchorable Title="Radio" ContentId="radioView">
-                                    <views:RadioView x:Name="RadioView" />
+                                    <views:RadioView x:Name="RadioView" DataContext="{Binding RadioViewModel}" />
                                 </LayoutAnchorable>
                             </LayoutAnchorablePane>
                         </LayoutAnchorablePaneGroup>
@@ -60,7 +54,7 @@
                                 <LayoutDocument
                                     Title="Logbook Entry"
                                     ContentId="logbookEntryView">
-                                    <views:LogbookEntryView x:Name="LogbookEntryView" />
+                                    <views:LogbookEntryView x:Name="LogbookEntryView" DataContext="{Binding LogbookViewModel.LogbookEntryViewModel}" />
                                 </LayoutDocument>
                             </LayoutDocumentPane>
                             
@@ -78,44 +72,12 @@
                                 <LayoutDocument
                                     Title="Logbook"
                                     ContentId="logbookView">
-                                    <views:LogbookView x:Name="LogbookView" />
+                                    <views:LogbookView x:Name="LogbookView" DataContext="{Binding LogbookViewModel}" />
                                 </LayoutDocument>
                             </LayoutDocumentPane>
                         </LayoutDocumentPaneGroup>
                     </LayoutPanel>
-                    
-                    <LayoutAnchorablePaneGroup DockWidth="50">
-                        <LayoutAnchorablePane>                            
-                            <LayoutAnchorable Title="Tool Window 2" ContentId="toolWindow2">
-                                <TextBlock Text="Test 1" />
-                            </LayoutAnchorable>
-                        </LayoutAnchorablePane>
-                    </LayoutAnchorablePaneGroup>
                 </LayoutPanel>
-
-                <LayoutRoot.TopSide>
-                    <LayoutAnchorSide>
-                    </LayoutAnchorSide>
-                </LayoutRoot.TopSide>
-                
-                <LayoutRoot.LeftSide>
-                    <LayoutAnchorSide>
-                        <LayoutAnchorGroup>
-                            <LayoutAnchorable
-                                Title="AutoHide1 Content"
-                                ContentId="AutoHide1Content">
-                                <TextBox Text="Test 2" />
-                            </LayoutAnchorable>
-                            
-                            <LayoutAnchorable Title="AutoHide2 Content" ContentId="AutoHide2Content">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBox />
-                                    <TextBox />
-                                </StackPanel>
-                            </LayoutAnchorable>
-                        </LayoutAnchorGroup>
-                    </LayoutAnchorSide>
-                </LayoutRoot.LeftSide>
             </LayoutRoot>
         </DockingManager>
     </Grid>

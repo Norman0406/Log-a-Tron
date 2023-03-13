@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Logatron.Views"
+             xmlns:viewModels="clr-namespace:Logatron.ViewModels"
              xmlns:components="clr-namespace:Logatron.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModels:LogbookEntryViewModel />
+    </UserControl.DataContext>
+    
     <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10">
         <TabItem Name="general" Header="General">
             <TabItem.Content>
@@ -14,48 +19,23 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <components:WatermarkTextBox Grid.Column="0" Hint="Callsign" Height="40" />
-                    <components:WatermarkTextBox Grid.Column="1" Hint="Comments" Height="40" />
-                </Grid>
-                <!--<Grid>
-                    <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        --><!--<RowDefinition Height="Auto" />-->
-                        <!--<RowDefinition Height="Auto" />--><!--
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        --><!--<ColumnDefinition Width="Auto" />--><!--
-                    </Grid.ColumnDefinitions>
 
-                    <TextBox Grid.Row="0" Grid.Column="0" Text="Callsign" Style="{StaticResource textBoxStyle}" />
+                    <!-- TODO: use https://github.com/xceedsoftware/wpftoolkit/wiki/WatermarkTextBox -->
+                    <TextBox Grid.Row="0" Text="{Binding Callsign}" />
+                    <TextBox Grid.Row="1" Text="{Binding Name}" />
+                    <TextBox Grid.Row="2" Text="{Binding Comments}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
 
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="Sent">
-                    </TextBox>
-                    <TextBlock  Grid.Row="0" Grid.Column="1" IsHitTestVisible="False" Text="Enter Search Term Here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=SearchTermTextBox}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                    --><!--<TextBox Grid.Row="0" Grid.Column="2" Text="Rcvd" />
-                    <TextBox Grid.Row="0" Grid.Column="2" Text="Band" />
-                    <TextBox Grid.Row="1" Grid.Column="0" Text="Start" />
-                    <TextBox Grid.Row="2" Grid.Column="0" Text="End" />-->
-                    <!--<TextBox Text="Grid" />--><!--
-                </Grid>-->
+                    <!-- TODO: use https://github.com/xceedsoftware/wpftoolkit/wiki/DateTimePicker -->
+                    <DatePicker Grid.Row="3" SelectedDateFormat="Long" SelectedDate="{Binding StartTime}" />
+                    <DatePicker Grid.Row="4" SelectedDateFormat="Long" SelectedDate="{Binding EndTime}" />
+                    
+                    <Button Grid.Row="5" Content="Add Entry" Command="{Binding AddEntryCommand}" />
+                </Grid>
             </TabItem.Content>
         </TabItem>
 

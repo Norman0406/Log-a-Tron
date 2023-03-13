@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Logatron.Views"
+             xmlns:viewModels="clr-namespace:Logatron.ViewModels"
              xmlns:components="clr-namespace:Logatron.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModels:RadioViewModel />
+    </UserControl.DataContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -22,8 +27,8 @@
 
         <Label Grid.Row="0" Grid.Column="0">TX</Label>
         <components:RadioStatusIndicator Grid.Row="1" Grid.Column="0" Width="30" Height="30"
-                                         Disabled="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Disabled}"
-                                         Tx="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Tx}" />
+                                         Disabled="{Binding Disabled}"
+                                         Tx="{Binding Tx}" />
 
         <Label Grid.Row="0" Grid.Column="1">Frequency</Label>
         <Label Grid.Row="1" Grid.Column="1" Content="{Binding Frequency}" FontSize="30" Style="{StaticResource lblDigital}" />

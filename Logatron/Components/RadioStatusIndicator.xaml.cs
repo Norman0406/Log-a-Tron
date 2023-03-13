@@ -26,7 +26,8 @@ namespace Logatron.Components
         public RadioStatusIndicator()
         {
             InitializeComponent();
-            DataContext = this;
+
+            // NOTE: should this also have a view model?
         }
     }
 }

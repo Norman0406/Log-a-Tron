@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:local="clr-namespace:Logatron.Views"
+             xmlns:viewModels="clr-namespace:Logatron.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">    
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModels:LogbookViewModel />
+    </UserControl.DataContext>
+    
     <UserControl.Resources>
         <CollectionViewSource Source="{Binding Entries}" x:Key="LogbookEntries">
             <CollectionViewSource.SortDescriptions>
@@ -34,7 +39,7 @@
                   FontSize="13">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding StartTime, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"
-                                    Header="Start Time" Width="Auto"/>
+                                    Header="Start Time" Width="Auto" SortDirection="Descending" />
                 <DataGridTextColumn Binding="{Binding EndTime, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"
                                     Header="End Time" Width="Auto"/>
                 <DataGridTextColumn Binding="{Binding Callsign}"

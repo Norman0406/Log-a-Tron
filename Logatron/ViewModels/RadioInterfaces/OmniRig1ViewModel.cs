@@ -1,44 +1,42 @@
-﻿using Logatron.Views;
-using System;
+﻿using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
-namespace Logatron.Handlers.RadioControllers
+namespace Logatron.ViewModels.RadioInterfaces
 {
-    internal class RadioControllerOmniRig1 : RadioController
+    public class OmniRig1ViewModel : RadioViewModel
     {
         private readonly HamRadioLib.OmniRig1.OmniRig OmniRig = new();
         private readonly CompositeDisposable _subscriptions = new();
 
-        public RadioControllerOmniRig1(RadioView radioView)
-            : base(radioView)
+        public OmniRig1ViewModel()
         {
             _subscriptions.Add(OmniRig.Status
                 .ObserveOnDispatcher()
                 .Subscribe(status =>
                 {
-                    RadioView.Disabled = status != HamRadioLib.OmniRig1.Types.Status.Online;
+                    Disabled = status != HamRadioLib.OmniRig1.Types.Status.Online;
                 }));
 
             _subscriptions.Add(OmniRig.Frequency
                 .ObserveOnDispatcher()
                 .Subscribe((value) =>
                 {
-                    RadioView.Frequency = FrequencyStringFromInteger(value / 1000.0);
+                    Frequency = FrequencyStringFromInteger(value / 1000.0);
                 }));
 
             _subscriptions.Add(OmniRig.Mode
                 .ObserveOnDispatcher()
                 .Subscribe((value) =>
                 {
-                    RadioView.Mode = ModeToString(value);
+                    Mode = ModeToString(value);
                 }));
 
             _subscriptions.Add(OmniRig.Transmitting
                 .ObserveOnDispatcher()
                 .Subscribe((value) =>
                 {
-                    RadioView.Tx = value;
+                    Tx = value;
                 }));
         }
 
@@ -60,7 +58,11 @@ namespace Logatron.Handlers.RadioControllers
 
         protected override void Dispose(bool disposing)
         {
-            _subscriptions.Dispose();
+            if (disposing)
+            {
+                _subscriptions.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

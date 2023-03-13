@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace Logatron.Logbook
+namespace Logatron.Models.Logbook
 {
     public class Database : DbContext
     {
@@ -18,8 +18,6 @@ namespace Logatron.Logbook
             Database.EnsureCreated();
         }
 
-        //// The following configures EF to create a Sqlite database file in the
-        //// special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
     }

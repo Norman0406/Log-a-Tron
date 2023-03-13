@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Logatron.Logbook
+namespace Logatron.Models.Logbook
 {
     public class Entry
     {
@@ -12,9 +12,9 @@ namespace Logatron.Logbook
 
         public string Callsign { get; set; } = string.Empty;
 
-        public string Comments { get; set; } = string.Empty;
-
         public string Name { get; set; } = string.Empty;
+
+        public string Comments { get; set; } = string.Empty;
 
         //public string Mode { get; set; }
 
