@@ -33,8 +33,16 @@
                     <!-- TODO: use https://github.com/xceedsoftware/wpftoolkit/wiki/DateTimePicker -->
                     <DatePicker Grid.Row="3" SelectedDateFormat="Long" SelectedDate="{Binding StartTime}" />
                     <DatePicker Grid.Row="4" SelectedDateFormat="Long" SelectedDate="{Binding EndTime}" />
-                    
-                    <Button Grid.Row="5" Content="Add Entry" Command="{Binding AddEntryCommand}" />
+
+                    <Grid Grid.Row="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Content="Add Entry" Command="{Binding AddEntryCommand}" />
+                        <Button Grid.Column="1" Content="Clear" Command="{Binding ClearCommand}" />
+                    </Grid>
                 </Grid>
             </TabItem.Content>
         </TabItem>

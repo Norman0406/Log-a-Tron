@@ -44,7 +44,8 @@
                         <LayoutAnchorablePaneGroup DockHeight="Auto">
                             <LayoutAnchorablePane>
                                 <LayoutAnchorable Title="Radio" ContentId="radioView">
-                                    <views:RadioView x:Name="RadioView" DataContext="{Binding RadioViewModel}" />
+                                    <views:RadioView x:Name="RadioView"
+                                                     DataContext="{Binding RadioViewModel}" />
                                 </LayoutAnchorable>
                             </LayoutAnchorablePane>
                         </LayoutAnchorablePaneGroup>
@@ -54,7 +55,8 @@
                                 <LayoutDocument
                                     Title="Logbook Entry"
                                     ContentId="logbookEntryView">
-                                    <views:LogbookEntryView x:Name="LogbookEntryView" DataContext="{Binding LogbookViewModel.LogbookEntryViewModel}" />
+                                    <views:LogbookEntryView x:Name="LogbookEntryView"
+                                                            DataContext="{Binding LogbookViewModel.LogbookEntryViewModel}" />
                                 </LayoutDocument>
                             </LayoutDocumentPane>
                             
@@ -72,7 +74,8 @@
                                 <LayoutDocument
                                     Title="Logbook"
                                     ContentId="logbookView">
-                                    <views:LogbookView x:Name="LogbookView" DataContext="{Binding LogbookViewModel}" />
+                                    <views:LogbookView x:Name="LogbookView"
+                                                       DataContext="{Binding LogbookViewModel}" />
                                 </LayoutDocument>
                             </LayoutDocumentPane>
                         </LayoutDocumentPaneGroup>

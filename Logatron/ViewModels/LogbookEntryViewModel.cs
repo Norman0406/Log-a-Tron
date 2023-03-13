@@ -45,6 +45,9 @@ namespace Logatron.ViewModels
         private ICommand? _addEntryCommand;
         public ICommand AddEntryCommand => _addEntryCommand ??= new Util.CommandHandler(() => AddEntry(), () => true);
 
+        private ICommand? _clearCommand;
+        public ICommand ClearCommand => _clearCommand ??= new Util.CommandHandler(() => Clear(), () => true);
+
         public LogbookEntryViewModel()
         {
             Clear();
