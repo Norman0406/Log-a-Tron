@@ -30,7 +30,7 @@
             var database = new Models.Logbook.Database("logbook.db");
             _logbookViewModel = new LogbookViewModel(database);
 
-            _radioViewModel = new RadioInterfaces.OmniRig1ViewModel();
+            _radioViewModel = new RadioViewModels.OmniRig1ViewModel();
 
             _mapViewModel = new MapViewModel();
 

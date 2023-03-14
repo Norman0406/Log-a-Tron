@@ -2,20 +2,22 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
-namespace Logatron.ViewModels.RadioInterfaces
+namespace Logatron.ViewModels.RadioViewModels
 {
-    public class OmniRig1ViewModel : RadioViewModel
+    public class OmniRig2ViewModel : RadioViewModel
     {
-        private readonly HamRadioLib.OmniRig1.OmniRig OmniRig = new();
+        public const string Name = "OmniRig v2";
+
+        private readonly HamRadioLib.OmniRig2.OmniRig OmniRig = new();
         private readonly CompositeDisposable _subscriptions = new();
 
-        public OmniRig1ViewModel()
+        public OmniRig2ViewModel()
         {
             _subscriptions.Add(OmniRig.Status
                 .ObserveOnDispatcher()
                 .Subscribe(status =>
                 {
-                    Disabled = status != HamRadioLib.OmniRig1.Types.Status.Online;
+                    Disabled = status != HamRadioLib.OmniRig2.Types.Status.Online;
                 }));
 
             _subscriptions.Add(OmniRig.Frequency
@@ -40,18 +42,18 @@ namespace Logatron.ViewModels.RadioInterfaces
                 }));
         }
 
-        private static string ModeToString(HamRadioLib.OmniRig1.Types.Mode mode)
+        private static string ModeToString(HamRadioLib.OmniRig2.Types.Mode mode)
         {
             return mode switch
             {
-                HamRadioLib.OmniRig1.Types.Mode.CwUsb => "CW-R",
-                HamRadioLib.OmniRig1.Types.Mode.CwLsb => "CW",
-                HamRadioLib.OmniRig1.Types.Mode.SsbUsb => "USB",
-                HamRadioLib.OmniRig1.Types.Mode.SsbLsb => "LSB",
-                HamRadioLib.OmniRig1.Types.Mode.DigitalUsb => "USB-D",
-                HamRadioLib.OmniRig1.Types.Mode.DigitalLsb => "LSB-D",
-                HamRadioLib.OmniRig1.Types.Mode.AM => "AM",
-                HamRadioLib.OmniRig1.Types.Mode.FM => "FM",
+                HamRadioLib.OmniRig2.Types.Mode.CwUsb => "CW-R",
+                HamRadioLib.OmniRig2.Types.Mode.CwLsb => "CW",
+                HamRadioLib.OmniRig2.Types.Mode.SsbUsb => "USB",
+                HamRadioLib.OmniRig2.Types.Mode.SsbLsb => "LSB",
+                HamRadioLib.OmniRig2.Types.Mode.DigitalUsb => "USB-D",
+                HamRadioLib.OmniRig2.Types.Mode.DigitalLsb => "LSB-D",
+                HamRadioLib.OmniRig2.Types.Mode.AM => "AM",
+                HamRadioLib.OmniRig2.Types.Mode.FM => "FM",
                 _ => "Unknown",
             }; ;
         }
