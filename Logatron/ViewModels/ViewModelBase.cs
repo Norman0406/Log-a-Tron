@@ -16,9 +16,13 @@ namespace Logatron.ViewModels
         protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
         {
             if (EqualityComparer<T>.Default.Equals(storage, value))
+            {
                 return false;
+            }
+
             storage = value;
             OnPropertyChanged(propertyName);
+
             return true;
         }
     }

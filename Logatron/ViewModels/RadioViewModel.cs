@@ -34,10 +34,6 @@ namespace Logatron.ViewModels
             set { SetProperty(ref _mode, value); }
         }
 
-        public RadioViewModel()
-        {
-        }
-
         protected static string FrequencyStringFromInteger(double frequency)
         {
             // Technically this is incorrect. The frequency is passed as 1000 * khz, and is displayed as if it was megahertz.
@@ -47,6 +43,7 @@ namespace Logatron.ViewModels
 
         protected virtual void Dispose(bool disposing)
         {
+            // NOP
         }
 
         public void Dispose()
