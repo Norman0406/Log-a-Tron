@@ -61,13 +61,16 @@ namespace HamRadioLib.LotW
 
         public void Dispose()
         {
-            Dispose(true);
+            Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            _client.Dispose();
+            if (disposing)
+            {
+                _client.Dispose();
+            }
         }
     }
 }
