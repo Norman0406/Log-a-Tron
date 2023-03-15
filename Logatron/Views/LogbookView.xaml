@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:local="clr-namespace:Logatron.Views"
              xmlns:viewModels="clr-namespace:Logatron.ViewModels"
@@ -19,10 +20,12 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
-    
+
+    <!--ItemsSource="{Binding Source={StaticResource LogbookEntries}}"-->
     <Grid>
         <DataGrid Name="logbookData"
-                  ItemsSource="{Binding Source={StaticResource LogbookEntries}}"
+                  ItemsSource="{Binding Entries}"
+                  SelectedItem="{Binding SelectedEntry}"
                   AutoGenerateColumns="False"
                   EnableRowVirtualization="True"
                   IsSynchronizedWithCurrentItem="True"
@@ -37,6 +40,10 @@
                   FontFamily="Consolas"
                   SelectionMode="Single"
                   FontSize="13">
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding BeginEditCommand}" />
+            </DataGrid.InputBindings>
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding StartTime, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"
                                     Header="Start Time" Width="Auto" SortDirection="Descending" />
@@ -49,6 +56,13 @@
                 <DataGridTextColumn Binding="{Binding Name}"
                                     Header="Name" Width="Auto"/>
             </DataGrid.Columns>
+
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Edit" Command="{Binding BeginEditCommand}" />
+                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
 
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">

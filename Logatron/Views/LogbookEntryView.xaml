@@ -35,13 +35,20 @@
                     <DatePicker Grid.Row="4" SelectedDateFormat="Long" SelectedDate="{Binding EndTime}" />
 
                     <Grid Grid.Row="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Content="Add Entry" Command="{Binding AddEntryCommand}" />
-                        <Button Grid.Column="1" Content="Clear" Command="{Binding ClearCommand}" />
+                        <Button Grid.Row="0" Grid.Column="0" Content="Execute" Command="{Binding ExecuteCommand}" />
+                        <Button Grid.Row="0" Grid.Column="1" Content="Clear" Command="{Binding ClearCommand}" />
+
+                        <!--<Button Grid.Row="1" Grid.Column="0" Content="Update" Command="{Binding UpdateCommand}" />
+                        <Button Grid.Row="2" Grid.Column="1" Content="Cancel" Command="{Binding ClearCommand}" />-->
                     </Grid>
                 </Grid>
             </TabItem.Content>

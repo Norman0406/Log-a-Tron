@@ -1,93 +1,93 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Security.Cryptography;
 using System.Windows.Input;
 
 namespace Logatron.ViewModels
 {
-    public class LogbookEntryViewModel : ViewModelBase
+    public partial class LogbookEntryViewModel : ObservableObject
     {
-        private readonly Models.Logbook.Database? _database;
+        public int Id { get; } = 0;
 
+        [ObservableProperty]
         private DateTime _startTime = DateTime.UtcNow;
-        public DateTime StartTime
-        {
-            get { return _startTime; }
-            set { SetProperty(ref _startTime, value); }
-        }
 
+        [ObservableProperty]
         private DateTime _endTime = DateTime.UtcNow;
-        public DateTime EndTime
-        {
-            get { return _endTime; }
-            set { SetProperty(ref _endTime, value); }
-        }
 
+        [ObservableProperty]
         private string _callsign = string.Empty;
-        public string Callsign
-        {
-            get { return _callsign; }
-            set { SetProperty(ref _callsign, value); }
-        }
 
+        [ObservableProperty]
         private string _name = string.Empty;
-        public string Name
-        {
-            get { return _name; }
-            set { SetProperty(ref _name, value); }
-        }
 
+        [ObservableProperty]
         private string _comments = string.Empty;
-        public string Comments
+
+        public enum ViewMode
         {
-            get { return _comments; }
-            set { SetProperty(ref _comments, value); }
+            Adding,
+            Updating
         }
 
-        private ICommand? _addEntryCommand;
-        public ICommand AddEntryCommand => _addEntryCommand ??= new Util.CommandHandler(() => AddEntry(), () => true);
+        private ViewMode _mode = ViewMode.Adding;
+        public ViewMode Mode
+        {
+            get { return _mode; }
+            set { SetProperty(ref _mode, value); }
+        }
 
-        private ICommand? _clearCommand;
-        public ICommand ClearCommand => _clearCommand ??= new Util.CommandHandler(() => Clear(), () => true);
+        public ICommand ExecuteCommand { get; }
+        public ICommand ClearCommand { get; }
 
         public LogbookEntryViewModel()
         {
+            ExecuteCommand = new RelayCommand(() => { });
+            ClearCommand = new RelayCommand(() => { });
+
             Clear();
         }
 
-        public LogbookEntryViewModel(Models.Logbook.Database database)
+        public LogbookEntryViewModel(ICommand executeCommand, ICommand clearCommand)
         {
-            _database = database;
+            _mode = ViewMode.Adding;
+            ExecuteCommand = executeCommand;
+            ClearCommand = clearCommand;
+
             Clear();
         }
 
-        private void Clear()
+        public LogbookEntryViewModel(Models.Logbook.Entry entry, ICommand command, ICommand clearCommand)
+        {
+            _mode = ViewMode.Updating;
+            ExecuteCommand = command;
+            ClearCommand = clearCommand;
+
+            Id = entry.Id;
+            StartTime = entry.StartTime;
+            EndTime = entry.EndTime;
+            Callsign = entry.Callsign;
+            Name = entry.Name;
+            Comments = entry.Comments;
+        }
+
+        public void UpdateEntry(ref Models.Logbook.Entry entry)
+        {
+            entry.StartTime = StartTime;
+            entry.EndTime = EndTime;
+            entry.Callsign = Callsign;
+            entry.Name = Name;
+            entry.Comments = Comments;
+        }
+
+        public void Clear()
         {
             StartTime = DateTime.UtcNow;
             EndTime = DateTime.UtcNow;
             Callsign = string.Empty;
             Name = string.Empty;
             Comments = string.Empty;
-        }
-
-        private void AddEntry()
-        {
-            if (_database == null)
-            {
-                return;
-            }
-
-            var entry = new Models.Logbook.Entry()
-            {
-                StartTime = StartTime,
-                EndTime = EndTime,
-                Callsign = Callsign,
-                Name = Name,
-                Comments = Comments,
-            };
-
-            _database.Entries.Add(entry);
-            _database.SaveChanges();
-
-            Clear();
         }
     }
 }

@@ -13,23 +13,23 @@
         <viewModels:MainViewModel />
     </Window.DataContext>
 
-    <Grid x:Name="layoutRoot">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
+    <DockPanel>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Name="lblCursorPosition" />
+            </StatusBarItem>
+        </StatusBar>
+        
         <DockingManager x:Name="dockManager"
-            Grid.Row="1"
             AllowMixedOrientation="True"
             AutoWindowSizeWhenOpened="True"
             IsVirtualizingAnchorable="True"
             IsVirtualizingDocument="True">
-            
+
             <DockingManager.Theme>
                 <avalonDock:GenericTheme />
             </DockingManager.Theme>
-            
+
             <DockingManager.DocumentHeaderTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -37,8 +37,8 @@
                     </StackPanel>
                 </DataTemplate>
             </DockingManager.DocumentHeaderTemplate>
-            
-            <LayoutRoot>                
+
+            <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
                     <LayoutPanel Orientation="Vertical">
                         <LayoutAnchorablePaneGroup DockHeight="Auto">
@@ -59,7 +59,7 @@
                                                             DataContext="{Binding LogbookViewModel.LogbookEntryViewModel}" />
                                 </LayoutDocument>
                             </LayoutDocumentPane>
-                            
+
                             <LayoutDocumentPane>
                                 <LayoutDocument
                                     Title="Map View"
@@ -83,5 +83,5 @@
                 </LayoutPanel>
             </LayoutRoot>
         </DockingManager>
-    </Grid>
+    </DockPanel>
 </Window>
