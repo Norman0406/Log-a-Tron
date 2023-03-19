@@ -6,8 +6,6 @@ namespace HamRadioLib.QrzDotCom
 {
     public class Client : IDisposable
     {
-        public uint MaxLoginAttempts = 2;
-
         private static readonly string _version = "1.34";
         private static readonly string _baseUrl = "https://xmldata.qrz.com/";
         private static readonly string _queryPath = $"xml/{_version}";

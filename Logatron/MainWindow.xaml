@@ -8,7 +8,10 @@
         xmlns:views="clr-namespace:Logatron.Views"
         xmlns:viewModels="clr-namespace:Logatron.ViewModels"
         mc:Ignorable="d"
-        Title="Logatron" Height="800" Width="1200">
+        Closing="WindowClosing"
+        Title="Logatron"
+        Width="1200"
+        Height="800">
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
