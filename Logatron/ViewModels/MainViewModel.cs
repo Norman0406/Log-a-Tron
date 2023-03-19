@@ -57,7 +57,7 @@ namespace Logatron.ViewModels
             //var credential = Util.CredentialManager.LoadCredential("LotW");
             //if (credential != null)
             //{
-            //    HamRadioLib.LotW.Client lotwClient = new(credential.UserName, credential.Password);
+            //    Logatron.LotW.Client lotwClient = new(credential.UserName, credential.Password);
             //    var adifFile = lotwClient.Query().Result;
             //}
 
@@ -65,13 +65,13 @@ namespace Logatron.ViewModels
             //var qrzCredential = Util.CredentialManager.LoadCredential("QRZ.com");
             //if (qrzCredential != null)
             //{
-            //    var qrzClient = new HamRadioLib.QrzDotCom.Client(qrzCredential.UserName, qrzCredential.Password);
+            //    var qrzClient = new Logatron.QrzDotCom.Client(qrzCredential.UserName, qrzCredential.Password);
             //    var callsignResult = qrzClient.QueryCallsign("HB9HTX").Result;
             //    var dxccResult = qrzClient.QueryDxcc(291).Result;
             //}
 
             //// initialize jt client
-            //var _jtClient = new HamRadioLib.Jt.Client("239.255.255.0", 2237);
+            //var _jtClient = new Logatron.Jt.Client("239.255.255.0", 2237);
             //_jtClient.Alerts.Subscribe((alert) =>
             //{
             //});

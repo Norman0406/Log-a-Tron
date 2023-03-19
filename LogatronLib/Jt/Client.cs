@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reactive.Subjects;
 
-namespace HamRadioLib.Jt
+namespace Logatron.Jt
 {
     public class Client
     {

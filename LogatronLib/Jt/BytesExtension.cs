@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace HamRadioLib.Jt
+namespace Logatron.Jt
 {
     internal static class BytesExtension
     {

@@ -1,4 +1,4 @@
-﻿namespace HamRadioLib.Jt.Messages
+﻿namespace Logatron.Jt.Messages
 {
     public class QsoLogged : JtMessage
     {

@@ -2,7 +2,7 @@
 using System.Web;
 using System.Xml.Serialization;
 
-namespace HamRadioLib.QrzDotCom
+namespace Logatron.QrzDotCom
 {
     public class Client : IDisposable
     {

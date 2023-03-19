@@ -1,6 +1,6 @@
 ﻿using M0LTE.AdifLib;
 
-namespace HamRadioLib.Adif
+namespace Logatron.Adif
 {
     public class Parser
     {

@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace HamRadioLib.QrzDotCom
+namespace Logatron.QrzDotCom
 {
     [XmlRoot(ElementName = "QRZDatabase", Namespace = "http://xmldata.qrz.com")]
     public class QrzDatabase

@@ -1,4 +1,4 @@
-﻿namespace HamRadioLib.QrzDotCom
+﻿namespace Logatron.QrzDotCom
 {
     public class Exception : System.Exception
     {

@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace HamRadioLib.QrzDotCom
+namespace Logatron.QrzDotCom
 {
     public class Callsign
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Reactive.Subjects;
 
-namespace HamRadioLib.OmniRig1.Handlers
+namespace Logatron.OmniRig1.Handlers
 {
     internal class OmniRigModeHandler
     {

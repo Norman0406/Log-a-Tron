@@ -1,4 +1,4 @@
-﻿namespace HamRadioLib.OmniRig2.Types
+﻿namespace Logatron.OmniRig2.Types
 {
     public enum Status
     {

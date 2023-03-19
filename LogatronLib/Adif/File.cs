@@ -1,4 +1,4 @@
-﻿namespace HamRadioLib.Adif
+﻿namespace Logatron.Adif
 {
     public class File
     {

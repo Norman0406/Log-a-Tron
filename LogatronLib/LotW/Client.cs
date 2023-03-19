@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Web;
 
-namespace HamRadioLib.LotW
+namespace Logatron.LotW
 {
     public class Client : IDisposable
     {

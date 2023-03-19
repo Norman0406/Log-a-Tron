@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logatron", "Logatron\Logatron.csproj", "{FD79454B-4582-4AD2-A7E7-D3C0C91A9F87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamRadioLib", "HamRadioLib\HamRadioLib.csproj", "{CDB1D33C-1710-4A53-8942-E1BF165E5E81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogatronLib", "LogatronLib\LogatronLib.csproj", "{CDB1D33C-1710-4A53-8942-E1BF165E5E81}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniRig1Lib", "OmniRig1Lib\OmniRig1Lib.csproj", "{79AD99A1-3874-46EE-88B1-39E34BB27712}"
 EndProject

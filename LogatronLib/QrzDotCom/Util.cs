@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace HamRadioLib.QrzDotCom
+namespace Logatron.QrzDotCom
 {
     internal static class Util
     {

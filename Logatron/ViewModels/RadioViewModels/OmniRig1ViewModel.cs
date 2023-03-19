@@ -8,7 +8,7 @@ namespace Logatron.ViewModels.RadioViewModels
     {
         public const string Name = "OmniRig v1";
 
-        private readonly HamRadioLib.OmniRig1.OmniRig OmniRig = new();
+        private readonly OmniRig1.OmniRig OmniRig = new();
         private readonly CompositeDisposable _subscriptions = new();
 
         public OmniRig1ViewModel()
@@ -17,7 +17,7 @@ namespace Logatron.ViewModels.RadioViewModels
                 .ObserveOnDispatcher()
                 .Subscribe(status =>
                 {
-                    Disabled = status != HamRadioLib.OmniRig1.Types.Status.Online;
+                    Disabled = status != OmniRig1.Types.Status.Online;
                 }));
 
             _subscriptions.Add(OmniRig.Frequency
@@ -42,18 +42,18 @@ namespace Logatron.ViewModels.RadioViewModels
                 }));
         }
 
-        private static string ModeToString(HamRadioLib.OmniRig1.Types.Mode mode)
+        private static string ModeToString(OmniRig1.Types.Mode mode)
         {
             return mode switch
             {
-                HamRadioLib.OmniRig1.Types.Mode.CwUsb => "CW-R",
-                HamRadioLib.OmniRig1.Types.Mode.CwLsb => "CW",
-                HamRadioLib.OmniRig1.Types.Mode.SsbUsb => "USB",
-                HamRadioLib.OmniRig1.Types.Mode.SsbLsb => "LSB",
-                HamRadioLib.OmniRig1.Types.Mode.DigitalUsb => "USB-D",
-                HamRadioLib.OmniRig1.Types.Mode.DigitalLsb => "LSB-D",
-                HamRadioLib.OmniRig1.Types.Mode.AM => "AM",
-                HamRadioLib.OmniRig1.Types.Mode.FM => "FM",
+                OmniRig1.Types.Mode.CwUsb => "CW-R",
+                OmniRig1.Types.Mode.CwLsb => "CW",
+                OmniRig1.Types.Mode.SsbUsb => "USB",
+                OmniRig1.Types.Mode.SsbLsb => "LSB",
+                OmniRig1.Types.Mode.DigitalUsb => "USB-D",
+                OmniRig1.Types.Mode.DigitalLsb => "LSB-D",
+                OmniRig1.Types.Mode.AM => "AM",
+                OmniRig1.Types.Mode.FM => "FM",
                 _ => "Unknown",
             }; ;
         }

@@ -1,4 +1,4 @@
-﻿namespace HamRadioLib.Jt
+﻿namespace Logatron.Jt
 {
     public abstract class JtMessage
     {

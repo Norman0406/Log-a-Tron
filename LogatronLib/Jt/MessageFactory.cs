@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace HamRadioLib.Jt
+namespace Logatron.Jt
 {
     internal class MessageFactory
     {

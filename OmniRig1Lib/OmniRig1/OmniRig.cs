@@ -3,7 +3,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
-namespace HamRadioLib.OmniRig1
+namespace Logatron.OmniRig1
 {
     public class OmniRig
     {
