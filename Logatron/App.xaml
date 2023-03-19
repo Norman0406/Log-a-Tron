@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Logatron"
              xmlns:converters="clr-namespace:Logatron.Converters"
-             StartupUri="MainWindow.xaml">
+             Startup="OnStartUp">
     <Application.Resources>
         <Style x:Key="lblDigital" TargetType="Label">
             <Setter Property="FontFamily" Value="resources/digital.ttf #Digital Counter 7"/>

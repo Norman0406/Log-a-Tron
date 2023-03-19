@@ -1,32 +1,49 @@
-﻿using Logatron.Models.Logbook;
+﻿using AvalonDock.Layout.Serialization;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Logatron.Models.Logbook;
+using System;
+using System.IO;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Logatron.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public partial class MainViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private double _left;
+
+        [ObservableProperty]
+        private double _top;
+
+        [ObservableProperty]
+        private double _width;
+
+        [ObservableProperty]
+        private double _height;
+
+        [ObservableProperty]
+        private WindowState _windowState;
+
+        [ObservableProperty]
+        public AvalonDock.DockingManager _dockingManager;
+
+        [ObservableProperty]
         private LogbookViewModel _logbookViewModel;
-        public LogbookViewModel LogbookViewModel
-        {
-            get { return _logbookViewModel; }
-            set { SetProperty(ref _logbookViewModel, value); }
-        }
 
+        [ObservableProperty]
         private RadioViewModel _radioViewModel;
-        public RadioViewModel RadioViewModel
-        {
-            get { return _radioViewModel; }
-            set { SetProperty(ref _radioViewModel, value); }
-        }
 
+        [ObservableProperty]
         private MapViewModel _mapViewModel;
-        public MapViewModel MapViewModel
-        {
-            get { return _mapViewModel; }
-            set { SetProperty(ref _mapViewModel, value); }
-        }
+
+        public ICommand SaveStateCommand { get; }
 
         public MainViewModel()
         {
+            SaveStateCommand = new RelayCommand(SaveState);
+
             DatabaseManager dbManager = new("logbook.db");
 
             _logbookViewModel = new LogbookViewModel(dbManager);
@@ -58,6 +75,42 @@ namespace Logatron.ViewModels
             //_jtClient.Alerts.Subscribe((alert) =>
             //{
             //});
+        }
+
+        public void LoadState()
+        {
+            Left = Properties.Settings.Default.WindowPositionLeft;
+            Top = Properties.Settings.Default.WindowPositionTop;
+            Width = Properties.Settings.Default.WindowWidth;
+            Height = Properties.Settings.Default.WindowHeight;
+            WindowState = Properties.Settings.Default.Maximized ? WindowState.Maximized : WindowState.Normal;
+
+            try
+            {
+                StringReader stringReader = new(Properties.Settings.Default.Layout);
+                XmlLayoutSerializer layoutSerializer = new(DockingManager);
+                layoutSerializer.Deserialize(stringReader);
+            }
+            catch (Exception)
+            {
+                // NOP
+            }
+        }
+
+        public void SaveState()
+        {
+            Properties.Settings.Default.WindowPositionLeft = Left;
+            Properties.Settings.Default.WindowPositionTop = Top;
+            Properties.Settings.Default.WindowWidth = Width;
+            Properties.Settings.Default.WindowHeight = Height;
+            Properties.Settings.Default.Maximized = WindowState == WindowState.Maximized;
+
+            XmlLayoutSerializer layoutSerializer = new(DockingManager);
+            StringWriter stringWriter = new();
+            layoutSerializer.Serialize(stringWriter);
+            Properties.Settings.Default.Layout = stringWriter.ToString();
+
+            Properties.Settings.Default.Save();
         }
     }
 }
