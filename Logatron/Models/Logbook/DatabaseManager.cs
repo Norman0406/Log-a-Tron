@@ -7,6 +7,8 @@
         public DatabaseManager(string filename)
         {
             _filename = filename;
+
+            Context().Database.EnsureCreated();
         }
 
         public Database Context()

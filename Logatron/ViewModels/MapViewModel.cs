@@ -1,6 +1,8 @@
-﻿namespace Logatron.ViewModels
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Logatron.ViewModels
 {
-    public class MapViewModel : ViewModelBase
+    public partial class MapViewModel : ObservableObject
     {
     }
 }

@@ -31,12 +31,8 @@ namespace Logatron.ViewModels
             Updating
         }
 
+        [ObservableProperty]
         private ViewMode _mode = ViewMode.Adding;
-        public ViewMode Mode
-        {
-            get { return _mode; }
-            set { SetProperty(ref _mode, value); }
-        }
 
         public ICommand ExecuteCommand { get; }
         public ICommand ClearCommand { get; }

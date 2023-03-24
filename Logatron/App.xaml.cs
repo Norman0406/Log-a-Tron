@@ -6,7 +6,7 @@ namespace Logatron
 {
     public partial class App : Application
     {
-        private void OnStartUp(Object sender, StartupEventArgs e)
+        private void OnStartUp(object sender, StartupEventArgs e)
         {
             var mainWindow = new MainWindow();
             if (mainWindow.DataContext is MainViewModel viewModel)

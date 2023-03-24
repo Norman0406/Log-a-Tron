@@ -1,38 +1,22 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Globalization;
 
 namespace Logatron.ViewModels
 {
-    public class RadioViewModel : ViewModelBase, IDisposable
+    public partial class RadioViewModel : ObservableObject, IDisposable
     {
+        [ObservableProperty]
         private bool _disabled = true;
-        public bool Disabled
-        {
-            get { return _disabled; }
-            set { SetProperty(ref _disabled, value); }
-        }
 
+        [ObservableProperty]
         private bool _tx = false;
-        public bool Tx
-        {
-            get { return _tx; }
-            set { SetProperty(ref _tx, value); }
-        }
 
+        [ObservableProperty]
         private string _frequency = FrequencyStringFromInteger(0);
-        public string Frequency
-        {
-            get { return _frequency; }
-            set { SetProperty(ref _frequency, value); }
-        }
 
+        [ObservableProperty]
         private string _mode = string.Empty;
-
-        public string Mode
-        {
-            get { return _mode; }
-            set { SetProperty(ref _mode, value); }
-        }
 
         protected static string FrequencyStringFromInteger(double frequency)
         {

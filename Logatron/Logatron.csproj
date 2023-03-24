@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HamRadioLib\HamRadioLib.csproj" />
+    <ProjectReference Include="..\LogatronLib\LogatronLib.csproj" />
     <ProjectReference Include="..\OmniRig1Lib\OmniRig1Lib.csproj" />
     <ProjectReference Include="..\OmniRig2Lib\OmniRig2Lib.csproj" />
   </ItemGroup>
