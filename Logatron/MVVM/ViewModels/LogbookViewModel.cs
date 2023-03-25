@@ -18,7 +18,10 @@ namespace Logatron.MVVM.ViewModels
         private ObservableCollection<LogbookEntryListViewModel> _entries = new();
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasSelectedEntry))]
         private LogbookEntryListViewModel? _selectedEntry;
+
+        public bool HasSelectedEntry => SelectedEntry != null;
 
         [ObservableProperty]
         private LogbookEntryEditViewModel? _entryEdit;
@@ -98,6 +101,7 @@ namespace Logatron.MVVM.ViewModels
             await _logbook.UpdateEntry(entry);
             var entryInList = Entries.First(e => e.Entry.Id == entry.Id);
             entryInList.Update(entry);
+            Clear();
         }
 
         private void Clear()
@@ -115,6 +119,7 @@ namespace Logatron.MVVM.ViewModels
             {
                 await _logbook.DeleteEntry(SelectedEntry.Entry);
                 Entries.Remove(SelectedEntry);
+                Clear();
             }
         }
     }
