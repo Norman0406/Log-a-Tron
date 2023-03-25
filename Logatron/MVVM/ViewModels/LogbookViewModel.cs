@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Logatron.MVVM.Models;
+using Logatron.MVVM.Models.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,10 +17,10 @@ namespace Logatron.MVVM.ViewModels
     {
         private readonly Logbook _logbook;
 
-        private ObservableCollection<LogbookEntryListViewModel> _entries;
+        private ObservableCollection<LogbookEntryListViewModel> _entries = new();
 
         [ObservableProperty]
-        private ICollectionView _entriesView;
+        private ICollectionView _entriesView = CollectionViewSource.GetDefaultView(null);
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasSelectedEntry))]
@@ -30,26 +31,22 @@ namespace Logatron.MVVM.ViewModels
         [ObservableProperty]
         private LogbookEntryEditViewModel? _entryEdit;
 
-        public ICommand UpdateLogbookCommand { get; }
-        public ICommand CreateEntryCommand { get; }
-        public ICommand BeginUpdateEntryCommand { get; }
-        public ICommand UpdateEntryCommand { get; }
-        public ICommand DeleteEntryCommand { get; }
-        public ICommand ClearCommand { get; }
+        public ICommand UpdateLogbookCommand => new AsyncRelayCommand(UpdateLogbook);
+        public ICommand CreateEntryCommand => new AsyncRelayCommand(CreateEntry);
+        public ICommand BeginUpdateEntryCommand => new RelayCommand(BeginUpdateEntry);
+        public ICommand UpdateEntryCommand => new AsyncRelayCommand(UpdateEntry);
+        public ICommand DeleteEntryCommand => new AsyncRelayCommand(DeleteEntry);
+        public ICommand ClearCommand => new RelayCommand(Clear);
 
         public LogbookViewModel()
         {
+            var dummyLogbookService = new DummyLogbookService();
+            _logbook = new Logbook(dummyLogbookService, dummyLogbookService, dummyLogbookService, dummyLogbookService);
         }
 
         public LogbookViewModel(Logbook logbook)
         {
             _logbook = logbook;
-            UpdateLogbookCommand = new AsyncRelayCommand(UpdateLogbook);
-            CreateEntryCommand = new AsyncRelayCommand(CreateEntry);
-            BeginUpdateEntryCommand = new AsyncRelayCommand(BeginUpdateEntry);
-            UpdateEntryCommand = new AsyncRelayCommand(UpdateEntry);
-            DeleteEntryCommand = new AsyncRelayCommand(DeleteEntry);
-            ClearCommand = new RelayCommand(Clear);
         }
 
         private async Task UpdateLogbook()
@@ -81,7 +78,7 @@ namespace Logatron.MVVM.ViewModels
             Clear();
         }
 
-        private async Task BeginUpdateEntry()
+        private void BeginUpdateEntry()
         {
             if (SelectedEntry == null)
             {
