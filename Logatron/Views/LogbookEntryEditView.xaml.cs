@@ -2,9 +2,9 @@
 
 namespace Logatron.Views
 {
-    public partial class LogbookEntryView : UserControl
+    public partial class LogbookEntryEditView : UserControl
     {
-        public LogbookEntryView()
+        public LogbookEntryEditView()
         {
             InitializeComponent();
         }

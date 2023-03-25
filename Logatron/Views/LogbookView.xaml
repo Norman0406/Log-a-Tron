@@ -21,10 +21,9 @@
         </CollectionViewSource>
     </UserControl.Resources>
 
-    <!--ItemsSource="{Binding Source={StaticResource LogbookEntries}}"-->
     <Grid>
         <DataGrid Name="logbookData"
-                  ItemsSource="{Binding Entries}"
+                  ItemsSource="{Binding Source={StaticResource LogbookEntries}}"
                   SelectedItem="{Binding SelectedEntry}"
                   AutoGenerateColumns="False"
                   EnableRowVirtualization="True"

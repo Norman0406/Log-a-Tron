@@ -1,15 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Logatron.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System.IO;
 
-namespace Logatron.Models.Logbook
+namespace Logatron.Database
 {
-    public class Database : DbContext
+    public class LogbookContext : DbContext
     {
-        public DbSet<Entry> Entries { get; set; }
+        public DbSet<LogbookEntryDTO> Entries { get; set; }
 
         public string DbPath { get; }
 
-        public Database(string filename)
+        public LogbookContext(string filename)
         {
             DbPath = Path.Join(App.ConfigDir, filename);
         }

@@ -58,8 +58,8 @@
                                 <LayoutDocument
                                     Title="Logbook Entry"
                                     ContentId="logbookEntryView">
-                                    <views:LogbookEntryView x:Name="LogbookEntryView"
-                                                            DataContext="{Binding LogbookViewModel.LogbookEntryViewModel}" />
+                                    <views:LogbookEntryEditView x:Name="LogbookEntryEditView"
+                                                                DataContext="{Binding LogbookViewModel.EntryEdit}" />
                                 </LayoutDocument>
                             </LayoutDocumentPane>
 

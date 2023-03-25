@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace Logatron.Models.Logbook
+namespace Logatron.DTOs
 {
-    public class Entry
+    public class LogbookEntryDTO
     {
+        [Key]
         public int Id { get; set; }
 
         public DateTime StartTime { get; set; }

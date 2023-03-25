@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Logatron.Models.Logbook;
-using Microsoft.EntityFrameworkCore;
+using Logatron.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,17 +12,18 @@ namespace Logatron.ViewModels
 {
     public partial class LogbookViewModel : ObservableObject
     {
-        private readonly DatabaseFactory _databaseFactory;
+        private readonly Logbook _logbook;
 
         [ObservableProperty]
-        private IEnumerable<LogbookEntryViewModel> _entries;
+        private ObservableCollection<LogbookEntryListViewModel> _entries = new();
 
         [ObservableProperty]
-        private LogbookEntryViewModel? _selectedEntry;
+        private LogbookEntryListViewModel? _selectedEntry;
 
         [ObservableProperty]
-        private LogbookEntryViewModel? _logbookEntryViewModel;
+        private LogbookEntryEditViewModel? _entryEdit;
 
+        private ICommand UpdateLogbookCommand { get; }
         public ICommand BeginEditCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand UpdateCommand { get; }
@@ -34,11 +34,11 @@ namespace Logatron.ViewModels
         {
         }
 
-        public LogbookViewModel(DatabaseFactory databaseFactory)
+        public LogbookViewModel(Logbook logbook)
         {
-            _databaseFactory = databaseFactory;
-            _entries = new ObservableCollection<LogbookEntryViewModel>();
+            _logbook = logbook;
 
+            UpdateLogbookCommand = new AsyncRelayCommand(UpdateList);
             BeginEditCommand = new AsyncRelayCommand(BeginEdit);
             AddCommand = new AsyncRelayCommand(Add);
             UpdateCommand = new AsyncRelayCommand(Update);
@@ -48,54 +48,61 @@ namespace Logatron.ViewModels
 
         public void Init()
         {
-            UpdateList();
-
-            // TODO: default sorting doesn't yet work
+            UpdateLogbookCommand.Execute(null);
+            Clear();
         }
 
-        private void UpdateList()
+        private async Task UpdateList()
         {
-            var context = _databaseFactory.Context();
-            context.Entries.Load();
-            Entries = context.Entries.Local.ToObservableCollection().Select(entry =>
-                new LogbookEntryViewModel(entry, UpdateCommand, ClearCommand));
-
-            Clear();
+            var entries = await _logbook.GetEntries();
+            Entries = new ObservableCollection<LogbookEntryListViewModel>(
+                entries.Select(entry => new LogbookEntryListViewModel(entry)));
         }
 
         private async Task Add()
         {
-            var context = _databaseFactory.Context();
-            Entry entry = new();
-            LogbookEntryViewModel.UpdateEntry(ref entry);
+            LogbookEntry entry = new()
+            {
+                StartTime = EntryEdit.StartTime,
+                EndTime = EntryEdit.EndTime,
+                Callsign = EntryEdit.Callsign,
+                Name = EntryEdit.Name,
+                Comments = EntryEdit.Comments
+            };
 
-            context.Add(entry);
-            context.SaveChanges();
+            var newId = await _logbook.CreateEntry(entry);
 
-            UpdateList();
+            entry.Id = newId;
+            Entries.Add(new LogbookEntryListViewModel(entry));
+
+            Clear();
         }
 
         private async Task BeginEdit()
         {
-            LogbookEntryViewModel = _entries.FirstOrDefault(entry => entry.Id == SelectedEntry.Id);
+            EntryEdit = new LogbookEntryEditViewModel(SelectedEntry.Entry, UpdateCommand, ClearCommand);
         }
 
         private async Task Update()
         {
-            var context = _databaseFactory.Context();
-            context.Entries.Load();
+            LogbookEntry entry = new()
+            {
+                Id = EntryEdit.Entry.Id,
+                StartTime = EntryEdit.StartTime,
+                EndTime = EntryEdit.EndTime,
+                Callsign = EntryEdit.Callsign,
+                Name = EntryEdit.Name,
+                Comments = EntryEdit.Comments
+            };
 
-            var entry = await context.Entries.FirstAsync(entry => entry.Id == LogbookEntryViewModel.Id);
-            LogbookEntryViewModel.UpdateEntry(ref entry);
-
-            context.SaveChanges();
-
-            UpdateList();
+            await _logbook.UpdateEntry(entry);
+            var entryInList = Entries.First(e => e.Entry.Id == entry.Id);
+            entryInList.Update(entry);
         }
 
         private void Clear()
         {
-            LogbookEntryViewModel = new LogbookEntryViewModel(AddCommand, ClearCommand);
+            EntryEdit = new LogbookEntryEditViewModel(AddCommand, ClearCommand);
         }
 
         private async Task Delete()
@@ -106,13 +113,8 @@ namespace Logatron.ViewModels
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                var context = _databaseFactory.Context();
-                context.Entries.Load();
-                var entry = await context.Entries.FirstAsync(entry => entry.Id == SelectedEntry.Id);
-                context.Remove(entry);
-                context.SaveChanges();
-
-                UpdateList();
+                await _logbook.DeleteEntry(SelectedEntry.Entry);
+                Entries.Remove(SelectedEntry);
             }
         }
     }

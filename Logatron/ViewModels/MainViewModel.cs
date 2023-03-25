@@ -1,7 +1,9 @@
 ﻿using AvalonDock.Layout.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Logatron.Models.Logbook;
+using Logatron.Database;
+using Logatron.Models;
+using Logatron.Services;
 using System;
 using System.IO;
 using System.Windows;
@@ -42,12 +44,12 @@ namespace Logatron.ViewModels
 
         public MainViewModel()
         {
-            DatabaseFactory databaseFactory = new("logbook.db");
+            var logbook = CreateLogbook();
+
+            _logbookViewModel = new LogbookViewModel(logbook);
+            _logbookViewModel.Init();
 
             SaveStateCommand = new RelayCommand(SaveState);
-
-            _logbookViewModel = new LogbookViewModel(databaseFactory);
-            _logbookViewModel.Init();
 
             _radioViewModel = new RadioViewModels.OmniRig1ViewModel();
 
@@ -75,6 +77,17 @@ namespace Logatron.ViewModels
             //_jtClient.Alerts.Subscribe((alert) =>
             //{
             //});
+        }
+
+        private static Logbook CreateLogbook()
+        {
+            LogbookContextFactory databaseFactory = new("logbook.db");
+
+            ILogbookProvider logbookProvider = new DatabaseLogbookProvider(databaseFactory);
+            ILogbookEntryCreator entryCreator = new DatabaseLogbookEntryCreator(databaseFactory);
+            ILogbookEntryUpdater entryUpdater = new DatabaseLogbookEntryUpdater(databaseFactory);
+            ILogbookEntryDeleter entryDeleter = new DatabaseLogbookEntryDeleter(databaseFactory);
+            return new Logbook(logbookProvider, entryCreator, entryUpdater, entryDeleter);
         }
 
         public void LoadState()
