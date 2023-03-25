@@ -1,0 +1,89 @@
+﻿<Window x:Class="Logatron.MVVM.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonDock="https://github.com/Dirkster99/AvalonDock"
+        xmlns:views="clr-namespace:Logatron.MVVM.Views"
+        xmlns:viewModels="clr-namespace:Logatron.MVVM.ViewModels"
+        mc:Ignorable="d"
+        Closing="WindowClosing"
+        Title="Logatron"
+        Width="1200"
+        Height="800">
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
+
+    <DockPanel>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Name="lblCursorPosition" />
+            </StatusBarItem>
+        </StatusBar>
+        
+        <DockingManager x:Name="dockManager"
+            AllowMixedOrientation="True"
+            AutoWindowSizeWhenOpened="True"
+            IsVirtualizingAnchorable="True"
+            IsVirtualizingDocument="True">
+
+            <DockingManager.Theme>
+                <avalonDock:GenericTheme />
+            </DockingManager.Theme>
+
+            <DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                </DataTemplate>
+            </DockingManager.DocumentHeaderTemplate>
+
+            <LayoutRoot>
+                <LayoutPanel Orientation="Horizontal">
+                    <LayoutPanel Orientation="Vertical">
+                        <LayoutAnchorablePaneGroup DockHeight="Auto">
+                            <LayoutAnchorablePane>
+                                <LayoutAnchorable Title="Radio" ContentId="radioView">
+                                    <views:RadioView x:Name="RadioView"
+                                                     DataContext="{Binding RadioViewModel}" />
+                                </LayoutAnchorable>
+                            </LayoutAnchorablePane>
+                        </LayoutAnchorablePaneGroup>
+
+                        <LayoutDocumentPaneGroup>
+                            <LayoutDocumentPane>
+                                <LayoutDocument
+                                    Title="Logbook Entry"
+                                    ContentId="logbookEntryView">
+                                    <views:LogbookEntryEditView x:Name="LogbookEntryEditView"
+                                                                DataContext="{Binding LogbookViewModel.EntryEdit}" />
+                                </LayoutDocument>
+                            </LayoutDocumentPane>
+
+                            <LayoutDocumentPane>
+                                <LayoutDocument
+                                    Title="Map View"
+                                    ContentId="mapView">
+                                    <views:MapView x:Name="MapView" />
+                                </LayoutDocument>
+                            </LayoutDocumentPane>
+                        </LayoutDocumentPaneGroup>
+
+                        <LayoutDocumentPaneGroup>
+                            <LayoutDocumentPane>
+                                <LayoutDocument
+                                    Title="Logbook"
+                                    ContentId="logbookView">
+                                    <views:LogbookView x:Name="LogbookView"
+                                                       DataContext="{Binding LogbookViewModel}" />
+                                </LayoutDocument>
+                            </LayoutDocumentPane>
+                        </LayoutDocumentPaneGroup>
+                    </LayoutPanel>
+                </LayoutPanel>
+            </LayoutRoot>
+        </DockingManager>
+    </DockPanel>
+</Window>

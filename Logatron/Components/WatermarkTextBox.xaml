@@ -10,14 +10,14 @@
         <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
         <SolidColorBrush x:Key="brushWatermarkForeground" Color="SteelBlue" />
         <SolidColorBrush x:Key="brushWatermarkBorder" Color="Indigo" />
-        <Style x:Key="EntryFieldStyle" TargetType="Grid" >
+        <Style x:Key="EntryFieldStyle" TargetType="Grid">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="20,0" />
         </Style>
     </UserControl.Resources>
 
-    <Grid Grid.Row="0" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+    <Grid Grid.Row="0" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}">
         <TextBlock Margin="5,2" Text="{Binding Hint}" Foreground="{StaticResource brushWatermarkForeground}"
                        Visibility="{Binding ElementName=txtUserEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <TextBox Name="txtUserEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />

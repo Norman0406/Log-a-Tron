@@ -1,4 +1,5 @@
-﻿using Logatron.ViewModels;
+﻿using Logatron.MVVM.ViewModels;
+using Logatron.MVVM.Views;
 using System;
 using System.IO;
 using System.Windows;

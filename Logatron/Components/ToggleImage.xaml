@@ -4,10 +4,10 @@
              xmlns:local="clr-namespace:Logatron.Components">
     <Grid>
         <Image Source="{Binding OffImage}" RenderOptions.BitmapScalingMode="HighQuality"
-               Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Normal}"/>
+               Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Normal}" />
         <Image Source="{Binding OffImage}" RenderOptions.BitmapScalingMode="HighQuality"
-               Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Normal}"/>
+               Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Normal}" />
         <Image Source="{Binding OnImage}" RenderOptions.BitmapScalingMode="HighQuality"
-               Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverted}"/>
+               Visibility="{Binding OnOff, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
     </Grid>
 </UserControl>

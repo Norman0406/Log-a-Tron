@@ -1,12 +1,11 @@
 ﻿<Application x:Class="Logatron.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Logatron"
              xmlns:converters="clr-namespace:Logatron.Converters"
              Startup="OnStartUp">
     <Application.Resources>
         <Style x:Key="lblDigital" TargetType="Label">
-            <Setter Property="FontFamily" Value="resources/digital.ttf #Digital Counter 7"/>
+            <Setter Property="FontFamily" Value="resources/digital.ttf #Digital Counter 7" />
         </Style>
         <BitmapImage x:Key="GreenLight" UriSource="Resources/green_light.png" />
         <BitmapImage x:Key="RedLight" UriSource="Resources/red_light.png" />
