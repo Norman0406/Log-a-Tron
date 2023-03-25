@@ -1,14 +1,15 @@
-﻿namespace Logatron.Models.Logbook
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Logatron.Models.Logbook
 {
-    public class DatabaseManager
+    public class DatabaseFactory
     {
         private readonly string _filename;
 
-        public DatabaseManager(string filename)
+        public DatabaseFactory(string filename)
         {
             _filename = filename;
-
-            Context().Database.EnsureCreated();
+            Context().Database.Migrate();
         }
 
         public Database Context()

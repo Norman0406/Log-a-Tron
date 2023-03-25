@@ -42,11 +42,11 @@ namespace Logatron.ViewModels
 
         public MainViewModel()
         {
+            DatabaseFactory databaseFactory = new("logbook.db");
+
             SaveStateCommand = new RelayCommand(SaveState);
 
-            DatabaseManager dbManager = new("logbook.db");
-
-            _logbookViewModel = new LogbookViewModel(dbManager);
+            _logbookViewModel = new LogbookViewModel(databaseFactory);
             _logbookViewModel.Init();
 
             _radioViewModel = new RadioViewModels.OmniRig1ViewModel();
@@ -79,6 +79,8 @@ namespace Logatron.ViewModels
 
         public void LoadState()
         {
+            // TODO: move settings file to %AppData%/Logatron
+
             Left = Properties.Settings.Default.WindowPositionLeft;
             Top = Properties.Settings.Default.WindowPositionTop;
             Width = Properties.Settings.Default.WindowWidth;

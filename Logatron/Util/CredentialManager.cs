@@ -4,8 +4,6 @@ namespace Logatron.Util
 {
     internal class CredentialManager
     {
-        private static readonly string _appName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-
         public static void StoreCredential(string component, string username, string password)
         {
             if (component is null)
@@ -23,7 +21,7 @@ namespace Logatron.Util
                 throw new ArgumentNullException(nameof(password));
             }
 
-            var resource = $"{_appName}/{component}";
+            var resource = $"{App.AppName}/{component}";
             var vault = new Windows.Security.Credentials.PasswordVault();
 
             // check if credential already exists, in that case remove first
@@ -54,7 +52,7 @@ namespace Logatron.Util
                 throw new ArgumentNullException(nameof(component));
             }
 
-            var resource = $"{_appName}/{component}";
+            var resource = $"{App.AppName}/{component}";
 
             try
             {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+using System.IO;
 
 namespace Logatron.Models.Logbook
 {
@@ -11,9 +11,7 @@ namespace Logatron.Models.Logbook
 
         public Database(string filename)
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, filename);
+            DbPath = Path.Join(App.ConfigDir, filename);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
