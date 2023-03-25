@@ -47,7 +47,6 @@ namespace Logatron.MVVM.ViewModels
             var logbook = CreateLogbook();
 
             _logbookViewModel = new LogbookViewModel(logbook);
-            _logbookViewModel.Init();
 
             SaveStateCommand = new RelayCommand(SaveState);
 
