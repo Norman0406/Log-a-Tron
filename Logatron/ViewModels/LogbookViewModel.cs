@@ -13,7 +13,7 @@ namespace Logatron.ViewModels
 {
     public partial class LogbookViewModel : ObservableObject
     {
-        private readonly DatabaseManager _dbManager;
+        private readonly DatabaseFactory _databaseFactory;
 
         [ObservableProperty]
         private IEnumerable<LogbookEntryViewModel> _entries;
@@ -34,9 +34,9 @@ namespace Logatron.ViewModels
         {
         }
 
-        public LogbookViewModel(DatabaseManager dbManager)
+        public LogbookViewModel(DatabaseFactory databaseFactory)
         {
-            _dbManager = dbManager;
+            _databaseFactory = databaseFactory;
             _entries = new ObservableCollection<LogbookEntryViewModel>();
 
             BeginEditCommand = new AsyncRelayCommand(BeginEdit);
@@ -55,7 +55,7 @@ namespace Logatron.ViewModels
 
         private void UpdateList()
         {
-            var context = _dbManager.Context();
+            var context = _databaseFactory.Context();
             context.Entries.Load();
             Entries = context.Entries.Local.ToObservableCollection().Select(entry =>
                 new LogbookEntryViewModel(entry, UpdateCommand, ClearCommand));
@@ -65,7 +65,7 @@ namespace Logatron.ViewModels
 
         private async Task Add()
         {
-            var context = _dbManager.Context();
+            var context = _databaseFactory.Context();
             Entry entry = new();
             LogbookEntryViewModel.UpdateEntry(ref entry);
 
@@ -82,7 +82,7 @@ namespace Logatron.ViewModels
 
         private async Task Update()
         {
-            var context = _dbManager.Context();
+            var context = _databaseFactory.Context();
             context.Entries.Load();
 
             var entry = await context.Entries.FirstAsync(entry => entry.Id == LogbookEntryViewModel.Id);
@@ -106,7 +106,7 @@ namespace Logatron.ViewModels
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                var context = _dbManager.Context();
+                var context = _databaseFactory.Context();
                 context.Entries.Load();
                 var entry = await context.Entries.FirstAsync(entry => entry.Id == SelectedEntry.Id);
                 context.Remove(entry);
