@@ -17,7 +17,12 @@ namespace Logatron.MVVM.Models.Services
             return Task.CompletedTask;
         }
 
-        public Task<IEnumerable<LogbookEntry>> GetEntries()
+        public Task<int> GetNumberOfEntries()
+        {
+            return Task.FromResult(0);
+        }
+
+        public Task<IEnumerable<LogbookEntry>> GetEntries(int page, int limit)
         {
             return Task.FromResult(Enumerable.Empty<LogbookEntry>());
         }

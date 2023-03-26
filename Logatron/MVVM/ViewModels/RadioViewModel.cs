@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Logatron.MVVM.ViewModels
 {
-    public partial class RadioViewModel : ObservableObject, IDisposable
+    public partial class RadioViewModel : ViewModelBase, IDisposable
     {
         [ObservableProperty]
         private bool _disabled = true;

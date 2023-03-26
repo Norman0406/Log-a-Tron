@@ -3,7 +3,7 @@ using System;
 
 namespace Logatron.MVVM.ViewModels
 {
-    public abstract partial class LogbookEntryViewModelBase : ObservableObject
+    public abstract partial class LogbookEntryViewModelBase : ViewModelBase
     {
         [ObservableProperty]
         private DateTime _startTime = DateTime.UtcNow;

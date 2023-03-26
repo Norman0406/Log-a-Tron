@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace Logatron.MVVM.ViewModels
 {
-    public partial class MainViewModel : ObservableObject
+    public partial class MainViewModel : ViewModelBase
     {
         [ObservableProperty]
         private double _left;
@@ -89,7 +89,7 @@ namespace Logatron.MVVM.ViewModels
             return new Logbook(logbookProvider, entryCreator, entryUpdater, entryDeleter);
         }
 
-        public void LoadState()
+        public override void LoadState()
         {
             // TODO: move settings file to %AppData%/Logatron
 
@@ -109,9 +109,11 @@ namespace Logatron.MVVM.ViewModels
             {
                 // NOP
             }
+
+            _logbookViewModel.LoadState();
         }
 
-        public void SaveState()
+        public override void SaveState()
         {
             Properties.Settings.Default.WindowPositionLeft = Left;
             Properties.Settings.Default.WindowPositionTop = Top;
@@ -123,6 +125,8 @@ namespace Logatron.MVVM.ViewModels
             StringWriter stringWriter = new();
             layoutSerializer.Serialize(stringWriter);
             Properties.Settings.Default.Layout = stringWriter.ToString();
+
+            _logbookViewModel.SaveState();
 
             Properties.Settings.Default.Save();
         }

@@ -94,5 +94,17 @@ namespace Logatron.Properties {
                 this["Maximized"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LogbookPageSize {
+            get {
+                return ((int)(this["LogbookPageSize"]));
+            }
+            set {
+                this["LogbookPageSize"] = value;
+            }
+        }
     }
 }

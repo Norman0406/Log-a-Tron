@@ -17,10 +17,23 @@ namespace Logatron.Database.Services
             _databaseFactory = databaseFactory;
         }
 
-        public async Task<IEnumerable<LogbookEntry>> GetEntries()
+        public async Task<int> GetNumberOfEntries()
         {
             using var context = _databaseFactory.CreateContext();
-            return await context.Entries.Select(entry => ToLogbookEntry(entry)).ToListAsync();
+            return await context.Entries.CountAsync();
+        }
+
+        public async Task<IEnumerable<LogbookEntry>> GetEntries(int page, int limit)
+        {
+            using var context = _databaseFactory.CreateContext();
+
+            var skip = (page - 1) * limit;
+
+            return await context.Entries
+                .Skip(skip)
+                .Take(limit)
+                .OrderBy(c => c.StartTime)
+                .Select(entry => ToLogbookEntry(entry)).ToListAsync();
         }
 
         private static LogbookEntry ToLogbookEntry(LogbookEntryDTO logbookEntryDTO)

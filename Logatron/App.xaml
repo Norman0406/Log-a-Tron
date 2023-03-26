@@ -10,9 +10,15 @@
         <BitmapImage x:Key="GreenLight" UriSource="Resources/green_light.png" />
         <BitmapImage x:Key="RedLight" UriSource="Resources/red_light.png" />
         <BitmapImage x:Key="GrayLight" UriSource="Resources/gray_light.png" />
+        <BitmapImage x:Key="ArrowLeft" UriSource="Resources/arrow_left.png" />
+        <BitmapImage x:Key="ArrowRight" UriSource="Resources/arrow_right.png" />
+        <BitmapImage x:Key="DoubleArrowLeft" UriSource="Resources/double_arrow_left.png" />
+        <BitmapImage x:Key="DoubleArrowRight" UriSource="Resources/double_arrow_right.png" />
         <converters:BooleanToVisibilityConverter 
             x:Key="BooleanToVisibilityConverter"
             True="Visible"
             False="Collapsed" />
+        <converters:MultiValueEqualityConverter 
+            x:Key="MultiValueEqualityConverter" />
     </Application.Resources>
 </Application>

@@ -6,6 +6,8 @@ namespace Logatron.Database.Services
 {
     public interface ILogbookProvider
     {
-        Task<IEnumerable<LogbookEntry>> GetEntries();
+        Task<int> GetNumberOfEntries();
+
+        Task<IEnumerable<LogbookEntry>> GetEntries(int page, int limit);
     }
 }

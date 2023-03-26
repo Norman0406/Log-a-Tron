@@ -9,8 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\arrow_left.png" />
+    <None Remove="Resources\arrow_right.png" />
     <None Remove="Resources\blue_light.png" />
     <None Remove="Resources\digital.ttf" />
+    <None Remove="Resources\double_arrow_left.png" />
+    <None Remove="Resources\double_arrow_right.png" />
     <None Remove="Resources\gray_light.png" />
     <None Remove="Resources\green_led.png" />
     <None Remove="Resources\green_light.png" />
@@ -21,8 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\arrow_left.png" />
+    <Resource Include="Resources\arrow_right.png" />
     <Resource Include="Resources\blue_light.png" />
     <Resource Include="Resources\digital.ttf" />
+    <Resource Include="Resources\double_arrow_left.png" />
+    <Resource Include="Resources\double_arrow_right.png" />
     <Resource Include="Resources\gray_light.png" />
     <Resource Include="Resources\green_light.png" />
     <Resource Include="Resources\purple_light.png" />

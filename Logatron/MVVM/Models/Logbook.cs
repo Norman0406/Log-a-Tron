@@ -23,9 +23,14 @@ namespace Logatron.MVVM.Models
             _entryDeleter = entryDeleter;
         }
 
-        public async Task<IEnumerable<LogbookEntry>> GetEntries()
+        public async Task<int> GetNumberOfEntries()
         {
-            return await _logbookProvider.GetEntries();
+            return await _logbookProvider.GetNumberOfEntries();
+        }
+
+        public async Task<IEnumerable<LogbookEntry>> GetEntries(int page, int limit)
+        {
+            return await _logbookProvider.GetEntries(page, limit);
         }
 
         public async Task<int> CreateEntry(LogbookEntry logbookEntry)

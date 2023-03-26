@@ -4,23 +4,21 @@ using Logatron.MVVM.Models;
 using Logatron.MVVM.Models.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Logatron.MVVM.ViewModels
 {
-    public partial class LogbookViewModel : ObservableObject
+    public partial class LogbookViewModel : ViewModelBase
     {
         private readonly Logbook _logbook;
 
-        private ObservableCollection<LogbookEntryListViewModel> _entries = new();
-
         [ObservableProperty]
-        private ICollectionView _entriesView = CollectionViewSource.GetDefaultView(null);
+        [NotifyPropertyChangedFor(nameof(NumberOfPages))]
+        private ObservableCollection<LogbookEntryListViewModel> _entries = new();
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasSelectedEntry))]
@@ -29,34 +27,103 @@ namespace Logatron.MVVM.ViewModels
         public bool HasSelectedEntry => SelectedEntry != null;
 
         [ObservableProperty]
-        private LogbookEntryEditViewModel? _entryEdit;
+        private LogbookEntryEditViewModel _entryEdit;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Pages))]
+        public int _currentPageNumber = 1;
+
+        public int NumberOfPages => (NumberOfEntries - 1) / PageSize + 1;
+
+        public struct PageOrEllipsis
+        {
+            public bool IsEllipsis { get; set; }
+            public int PageNumber { get; set; }
+        }
+
+        public IEnumerable<PageOrEllipsis> Pages => CreateEllipsedPages();
+
+        private readonly IList<int> _pageSizes = new List<int> { 10, 25, 50, 100, 250, 500 };
+        public IList<int> PageSizes => _pageSizes;
+
+        public int PageSize => PageSizes[SelectedPageSizeIndex];
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(PageSize))]
+        [NotifyPropertyChangedFor(nameof(NumberOfPages))]
+        [NotifyPropertyChangedFor(nameof(Pages))]
+        public int _selectedPageSizeIndex = 0;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(NumberOfPages))]
+        [NotifyPropertyChangedFor(nameof(Pages))]
+        private int _numberOfEntries = 0;
 
         public ICommand UpdateLogbookCommand => new AsyncRelayCommand(UpdateLogbook);
+        public ICommand SortingChangedCommand => new AsyncRelayCommand<DataGridSortingEventArgs>(SortingChanged);
         public ICommand CreateEntryCommand => new AsyncRelayCommand(CreateEntry);
         public ICommand BeginUpdateEntryCommand => new RelayCommand(BeginUpdateEntry);
         public ICommand UpdateEntryCommand => new AsyncRelayCommand(UpdateEntry);
         public ICommand DeleteEntryCommand => new AsyncRelayCommand(DeleteEntry);
         public ICommand ClearCommand => new RelayCommand(Clear);
+        public ICommand GoToFirstPageCommand => new AsyncRelayCommand(GoToFirstPage);
+        public ICommand GoToPreviousPageCommand => new AsyncRelayCommand(GoToPreviousPage);
+        public ICommand GoToPageNumberCommand => new AsyncRelayCommand<int>(GoToPageNumber);
+        public ICommand GoToNextPageCommand => new AsyncRelayCommand(GoToNextPage);
+        public ICommand GoToLastPageCommand => new AsyncRelayCommand(GoToLastPage);
 
         public LogbookViewModel()
         {
             var dummyLogbookService = new DummyLogbookService();
             _logbook = new Logbook(dummyLogbookService, dummyLogbookService, dummyLogbookService, dummyLogbookService);
+            Clear();
         }
 
         public LogbookViewModel(Logbook logbook)
         {
             _logbook = logbook;
+            Clear();
+        }
+
+        public override void LoadState()
+        {
+            var pageSizeIndex = _pageSizes.IndexOf(Properties.Settings.Default.LogbookPageSize);
+            if (pageSizeIndex >= 0)
+            {
+                SelectedPageSizeIndex = pageSizeIndex;
+            }
+        }
+
+        public override void SaveState()
+        {
+            Properties.Settings.Default.LogbookPageSize = PageSize;
         }
 
         private async Task UpdateLogbook()
         {
-            var entries = await _logbook.GetEntries();
-            _entries = new ObservableCollection<LogbookEntryListViewModel>(
-                entries.Select(entry => new LogbookEntryListViewModel(entry)));
+            // TODO: For some reason the "Loaded" event is not getting called
 
-            EntriesView = CollectionViewSource.GetDefaultView(_entries);
-            EntriesView.SortDescriptions.Add(new SortDescription(nameof(LogbookEntryViewModelBase.StartTime), ListSortDirection.Descending));
+            if (CurrentPageNumber > NumberOfPages && CurrentPageNumber > 1)
+            {
+                CurrentPageNumber = NumberOfPages;
+            }
+
+            await GoToPageNumber(CurrentPageNumber);
+
+            NumberOfEntries = await _logbook.GetNumberOfEntries();
+
+            Clear();
+        }
+
+        private Task SortingChanged(DataGridSortingEventArgs? e)
+        {
+            // TODO
+            return Task.CompletedTask;
+        }
+
+        private void EntriesChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(NumberOfPages));
         }
 
         private async Task CreateEntry()
@@ -70,11 +137,8 @@ namespace Logatron.MVVM.ViewModels
                 Comments = EntryEdit.Comments
             };
 
-            var newId = await _logbook.CreateEntry(entry);
-
-            entry.Id = newId;
-            _entries.Add(new LogbookEntryListViewModel(entry));
-
+            await _logbook.CreateEntry(entry);
+            await UpdateLogbook();
             Clear();
         }
 
@@ -101,8 +165,7 @@ namespace Logatron.MVVM.ViewModels
             };
 
             await _logbook.UpdateEntry(entry);
-            var entryInList = _entries.First(e => e.Entry.Id == entry.Id);
-            entryInList.Update(entry);
+            await UpdateLogbook();
             Clear();
         }
 
@@ -120,7 +183,13 @@ namespace Logatron.MVVM.ViewModels
                 MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 await _logbook.DeleteEntry(SelectedEntry.Entry);
-                _entries.Remove(SelectedEntry);
+
+                if (Entries.Count == 1 && NumberOfPages > 1 && CurrentPageNumber == NumberOfPages)
+                {
+                    CurrentPageNumber--;
+                }
+
+                await UpdateLogbook();
                 Clear();
             }
         }
@@ -128,6 +197,73 @@ namespace Logatron.MVVM.ViewModels
         private void Clear()
         {
             EntryEdit = new LogbookEntryEditViewModel(CreateEntryCommand, ClearCommand);
+        }
+
+        private async Task GoToFirstPage()
+        {
+            await GoToPageNumber(1);
+        }
+
+        private async Task GoToPreviousPage()
+        {
+            await GoToPageNumber(CurrentPageNumber - 1);
+        }
+
+        private async Task GoToPageNumber(int page)
+        {
+            if (page < 1 || page > NumberOfPages)
+            {
+                return;
+            }
+
+            var entries = await _logbook.GetEntries(page, PageSize);
+            Entries = new ObservableCollection<LogbookEntryListViewModel>(
+                entries.Select(entry => new LogbookEntryListViewModel(entry)));
+            Entries.CollectionChanged += EntriesChanged;
+
+            CurrentPageNumber = page;
+        }
+
+        private async Task GoToNextPage()
+        {
+            await GoToPageNumber(CurrentPageNumber + 1);
+        }
+
+        private async Task GoToLastPage()
+        {
+            await GoToPageNumber(NumberOfPages);
+        }
+
+        private IList<PageOrEllipsis> CreateEllipsedPages()
+        {
+            IList<PageOrEllipsis> pages = new List<PageOrEllipsis>();
+
+            bool addedEllipses = false;
+            for (int page = 1; page <= NumberOfPages; page++)
+            {
+                if (page == 1 || page == NumberOfPages ||
+                    page == CurrentPageNumber - 1 || page == CurrentPageNumber || page == CurrentPageNumber + 1)
+                {
+                    pages.Add(new PageOrEllipsis
+                    {
+                        IsEllipsis = false,
+                        PageNumber = page
+                    });
+
+                    addedEllipses = false;
+                }
+                else if (!addedEllipses)
+                {
+                    pages.Add(new PageOrEllipsis
+                    {
+                        IsEllipsis = true,
+                        PageNumber = 0
+                    });
+                    addedEllipses = true;
+                }
+            }
+
+            return pages;
         }
     }
 }
