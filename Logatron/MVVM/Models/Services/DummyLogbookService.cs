@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Logatron.Database.Services.ILogbookProvider;
 
 namespace Logatron.MVVM.Models.Services
 {
@@ -22,7 +23,7 @@ namespace Logatron.MVVM.Models.Services
             return Task.FromResult(0);
         }
 
-        public Task<IEnumerable<LogbookEntry>> GetEntries(int page, int limit)
+        public Task<IEnumerable<LogbookEntry>> GetEntries(PagingDefinition paging, OrderingDefinition ordering)
         {
             return Task.FromResult(Enumerable.Empty<LogbookEntry>());
         }

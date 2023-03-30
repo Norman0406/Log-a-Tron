@@ -53,7 +53,7 @@
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Row="0"
-                  Name="logbookData"
+                  x:Name="logbookData"
                   ItemsSource="{Binding Entries}"
                   SelectedItem="{Binding SelectedEntry}"
                   AutoGenerateColumns="False"
@@ -81,7 +81,7 @@
             </b:Interaction.Triggers>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding StartTime, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}" SortDirection="Descending"
+                <DataGridTextColumn Binding="{Binding StartTime, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"
                                     Header="Start Time" Width="Auto" />
                 <DataGridTextColumn Binding="{Binding EndTime, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"
                                     Header="End Time" Width="Auto" />
@@ -131,7 +131,16 @@
                     </b:Interaction.Triggers>
                 </ComboBox>
                 <Label VerticalAlignment="Center">
-                    <TextBlock Text="{Binding NumberOfEntries, StringFormat={}of {0} entries}" />
+                    <Label.Content>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{} ({0}) of {1} entries">
+                                    <Binding Path="Entries.Count" />
+                                    <Binding Path="NumberOfEntries" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Label.Content>
                 </Label>
             </StackPanel>
             <DockPanel HorizontalAlignment="Right" x:Name="logbookPanel">

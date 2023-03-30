@@ -1,10 +1,12 @@
 ﻿using Logatron.Database.Contexts;
 using Logatron.Database.DTOs;
+using Logatron.Database.Util;
 using Logatron.MVVM.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Logatron.Database.Services.ILogbookProvider;
 
 namespace Logatron.Database.Services
 {
@@ -23,16 +25,16 @@ namespace Logatron.Database.Services
             return await context.Entries.CountAsync();
         }
 
-        public async Task<IEnumerable<LogbookEntry>> GetEntries(int page, int limit)
+        public async Task<IEnumerable<LogbookEntry>> GetEntries(PagingDefinition paging, OrderingDefinition ordering)
         {
             using var context = _databaseFactory.CreateContext();
 
-            var skip = (page - 1) * limit;
+            var skip = (paging.Page - 1) * paging.Limit;
 
             return await context.Entries
+                .OrderBy(ordering.FieldName, ordering.Descending)
                 .Skip(skip)
-                .Take(limit)
-                .OrderBy(c => c.StartTime)
+                .Take(paging.Limit)
                 .Select(entry => ToLogbookEntry(entry)).ToListAsync();
         }
 

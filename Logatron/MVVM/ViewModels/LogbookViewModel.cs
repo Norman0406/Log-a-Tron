@@ -4,11 +4,13 @@ using Logatron.MVVM.Models;
 using Logatron.MVVM.Models.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static Logatron.Database.Services.ILogbookProvider;
 
 namespace Logatron.MVVM.ViewModels
 {
@@ -47,6 +49,12 @@ namespace Logatron.MVVM.ViewModels
         public IList<int> PageSizes => _pageSizes;
 
         public int PageSize => PageSizes[SelectedPageSizeIndex];
+
+        OrderingDefinition _ordering = new OrderingDefinition
+        {
+            FieldName = nameof(LogbookEntry.StartTime),
+            Descending = true,
+        };
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(PageSize))]
@@ -115,10 +123,22 @@ namespace Logatron.MVVM.ViewModels
             Clear();
         }
 
-        private Task SortingChanged(DataGridSortingEventArgs? e)
+        private async Task SortingChanged(DataGridSortingEventArgs? e)
         {
-            // TODO
-            return Task.CompletedTask;
+            if (e == null)
+            {
+                return;
+            }
+
+            var descending = e.Column.SortDirection != ListSortDirection.Descending;
+
+            e.Handled = true;
+
+            _ordering.FieldName = e.Column.SortMemberPath;
+            _ordering.Descending = descending;
+            await UpdateLogbook();
+
+            e.Column.SortDirection = (descending) ? ListSortDirection.Descending : ListSortDirection.Ascending;
         }
 
         private void EntriesChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -216,7 +236,13 @@ namespace Logatron.MVVM.ViewModels
                 return;
             }
 
-            var entries = await _logbook.GetEntries(page, PageSize);
+            var paging = new PagingDefinition
+            {
+                Page = page,
+                Limit = PageSize,
+            };
+
+            var entries = await _logbook.GetEntries(paging, _ordering);
             Entries = new ObservableCollection<LogbookEntryListViewModel>(
                 entries.Select(entry => new LogbookEntryListViewModel(entry)));
             Entries.CollectionChanged += EntriesChanged;

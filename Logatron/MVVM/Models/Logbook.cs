@@ -1,6 +1,7 @@
 ﻿using Logatron.Database.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static Logatron.Database.Services.ILogbookProvider;
 
 namespace Logatron.MVVM.Models
 {
@@ -28,9 +29,9 @@ namespace Logatron.MVVM.Models
             return await _logbookProvider.GetNumberOfEntries();
         }
 
-        public async Task<IEnumerable<LogbookEntry>> GetEntries(int page, int limit)
+        public async Task<IEnumerable<LogbookEntry>> GetEntries(PagingDefinition paging, OrderingDefinition ordering)
         {
-            return await _logbookProvider.GetEntries(page, limit);
+            return await _logbookProvider.GetEntries(paging, ordering);
         }
 
         public async Task<int> CreateEntry(LogbookEntry logbookEntry)
