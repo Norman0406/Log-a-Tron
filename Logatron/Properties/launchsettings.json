@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "Logatron (Unpackaged)": {
+        "commandName": "Project"
+      },
+      "Logatron (Package)": {
+        "commandName": "MsixPackage"
+      }
+    }
+}

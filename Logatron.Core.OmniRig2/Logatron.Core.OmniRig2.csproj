@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>Logatron.Core.OmniRig2</RootNamespace>
+    <Platforms>x86;x64;arm64;AnyCPU</Platforms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Interop.OmniRig">
+      <HintPath>OmniRig2\Interop.OmniRig.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+</Project>
