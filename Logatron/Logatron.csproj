@@ -1,85 +1,95 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>Logatron</RootNamespace>
+    <ApplicationIcon>Assets/WindowIcon.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x86;x64;arm64</Platforms>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
+    <UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
-
   <ItemGroup>
-    <None Remove="Resources\arrow_left.png" />
-    <None Remove="Resources\arrow_right.png" />
-    <None Remove="Resources\blue_light.png" />
-    <None Remove="Resources\digital.ttf" />
-    <None Remove="Resources\double_arrow_left.png" />
-    <None Remove="Resources\double_arrow_right.png" />
-    <None Remove="Resources\gray_light.png" />
-    <None Remove="Resources\green_led.png" />
-    <None Remove="Resources\green_light.png" />
-    <None Remove="Resources\purple_light.png" />
-    <None Remove="Resources\red_led.png" />
-    <None Remove="Resources\red_light.png" />
-    <None Remove="Resources\yellow_light.png" />
+    <None Remove="Views\RadioView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\arrow_left.png" />
-    <Resource Include="Resources\arrow_right.png" />
-    <Resource Include="Resources\blue_light.png" />
-    <Resource Include="Resources\digital.ttf" />
-    <Resource Include="Resources\double_arrow_left.png" />
-    <Resource Include="Resources\double_arrow_right.png" />
-    <Resource Include="Resources\gray_light.png" />
-    <Resource Include="Resources\green_light.png" />
-    <Resource Include="Resources\purple_light.png" />
-    <Resource Include="Resources\red_light.png" />
-    <Resource Include="Resources\yellow_light.png" />
+    <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-    <PackageReference Include="Dirkster.AvalonDock" Version="4.71.2" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.Aero" Version="4.71.2" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.Expression" Version="4.71.2" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.Metro" Version="4.71.2" />
-    <PackageReference Include="Mapsui" Version="4.0.0-beta.8" />
-    <PackageReference Include="Mapsui.Wpf" Version="4.0.0-beta.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="System.Reactive" Version="5.0.0" />
+    <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Core" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Primitives" Version="7.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.2" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230313.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageReference Include="WinUIEx" Version="2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LogatronLib\LogatronLib.csproj" />
-    <ProjectReference Include="..\OmniRig1Lib\OmniRig1Lib.csproj" />
-    <ProjectReference Include="..\OmniRig2Lib\OmniRig2Lib.csproj" />
+    <ProjectReference Include="..\Logatron.Core.OmniRig1\Logatron.Core.OmniRig1.csproj" />
+    <ProjectReference Include="..\Logatron.Core.OmniRig2\Logatron.Core.OmniRig2.csproj" />
+    <ProjectReference Include="..\Logatron.Core\Logatron.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Components\RadioStatusIndicator.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Update="TogglImage.cs">
-      <Generator>MSBuild:Compile</Generator>
-    </Compile>
+    <Resource Include="Assets\Dark\arrow_left.png" />
+    <Resource Include="Assets\Dark\arrow_right.png" />
+    <Resource Include="Assets\Dark\double_arrow_left.png" />
+    <Resource Include="Assets\Dark\double_arrow_right.png" />
+    <Resource Include="Assets\Light\arrow_left.png" />
+    <Resource Include="Assets\Light\arrow_right.png" />
+    <Resource Include="Assets\blue_light.png" />
+    <Resource Include="Assets\digital.ttf" />
+    <Resource Include="Assets\green_light.png" />
+    <Resource Include="Assets\Light\double_arrow_left.png" />
+    <Resource Include="Assets\Light\double_arrow_right.png" />
+    <Resource Include="Assets\purple_light.png" />
+    <Resource Include="Assets\red_light.png" />
+    <Resource Include="Assets\yellow_light.png" />
   </ItemGroup>
-
   <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\RadioView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\LogbookView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\LogbookEntry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Components\" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
+
+  <Target Name="_RemoveFrameworkReferences" BeforeTargets="_ConvertItems;_CalculateInputsForGenerateCurrentProjectAppxManifest">
+    <ItemGroup>
+      <FrameworkSdkReference Remove="@(FrameworkSdkReference)" Condition="$([System.String]::Copy('%(FrameworkSdkReference.SDKName)').StartsWith('Microsoft.WindowsAppRuntime.'))" />
+    </ItemGroup>
+  </Target>
 </Project>

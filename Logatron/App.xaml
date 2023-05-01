@@ -1,24 +1,51 @@
-﻿<Application x:Class="Logatron.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:Logatron.Converters"
-             Startup="OnStartUp">
+﻿<Application
+    x:Class="Logatron.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:helpers="using:Logatron.Helpers"
+    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters">
     <Application.Resources>
-        <Style x:Key="lblDigital" TargetType="Label">
-            <Setter Property="FontFamily" Value="resources/digital.ttf #Digital Counter 7" />
-        </Style>
-        <BitmapImage x:Key="GreenLight" UriSource="Resources/green_light.png" />
-        <BitmapImage x:Key="RedLight" UriSource="Resources/red_light.png" />
-        <BitmapImage x:Key="GrayLight" UriSource="Resources/gray_light.png" />
-        <BitmapImage x:Key="ArrowLeft" UriSource="Resources/arrow_left.png" />
-        <BitmapImage x:Key="ArrowRight" UriSource="Resources/arrow_right.png" />
-        <BitmapImage x:Key="DoubleArrowLeft" UriSource="Resources/double_arrow_left.png" />
-        <BitmapImage x:Key="DoubleArrowRight" UriSource="Resources/double_arrow_right.png" />
-        <converters:BooleanToVisibilityConverter 
-            x:Key="BooleanToVisibilityConverter"
-            True="Visible"
-            False="Collapsed" />
-        <converters:MultiValueEqualityConverter 
-            x:Key="MultiValueEqualityConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <BitmapImage x:Key="ArrowLeft" UriSource="Assets/Light/arrow_left.png" />
+                    <BitmapImage x:Key="ArrowRight" UriSource="Assets/Light/arrow_right.png" />
+                    <BitmapImage x:Key="DoubleArrowLeft" UriSource="Assets/Light/double_arrow_left.png" />
+                    <BitmapImage x:Key="DoubleArrowRight" UriSource="Assets/Light/double_arrow_right.png" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <BitmapImage x:Key="ArrowLeft" UriSource="Assets/Dark/arrow_left.png" />
+                    <BitmapImage x:Key="ArrowRight" UriSource="Assets/Dark/arrow_right.png" />
+                    <BitmapImage x:Key="DoubleArrowLeft" UriSource="Assets/Dark/double_arrow_left.png" />
+                    <BitmapImage x:Key="DoubleArrowRight" UriSource="Assets/Dark/double_arrow_right.png" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="/Styles/FontSizes.xaml" />
+                <ResourceDictionary Source="/Styles/Thickness.xaml" />
+                <ResourceDictionary Source="/Styles/TextBlock.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <FontFamily x:Key="DigitalFont">pack://application:,,,/Assets/digital.ttf#Digital Counter 7</FontFamily>
+
+            <SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
+
+            <BitmapImage x:Key="GreenLight" UriSource="Assets/green_light.png" />
+            <BitmapImage x:Key="RedLight" UriSource="Assets/red_light.png" />
+            <BitmapImage x:Key="GrayLight" UriSource="Assets/gray_light.png" />
+
+            <helpers:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibilityConverter"
+                True="Visible"
+                False="Collapsed" />
+
+            <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+
+            <helpers:MultiValueEqualityConverter 
+                x:Key="MultiValueEqualityConverter" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

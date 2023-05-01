@@ -1,30 +1,112 @@
-﻿using Logatron.MVVM.ViewModels;
-using Logatron.MVVM.Views;
-using System;
-using System.IO;
-using System.Windows;
+﻿using Logatron.Activation;
+using Logatron.Contracts.Services;
+using Logatron.Core.Contracts.Services;
+using Logatron.Core.Database.Contexts;
+using Logatron.Core.Services;
+using Logatron.Helpers;
+using Logatron.Models;
+using Logatron.Notifications;
+using Logatron.Services;
+using Logatron.ViewModels;
+using Logatron.ViewModels.RadioViewModels;
+using Logatron.Views;
 
-namespace Logatron
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.UI.Xaml;
+
+namespace Logatron;
+
+// To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
+public partial class App : Application
 {
-    public partial class App : Application
+    // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
+    // https://docs.microsoft.com/dotnet/core/extensions/generic-host
+    // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
+    // https://docs.microsoft.com/dotnet/core/extensions/configuration
+    // https://docs.microsoft.com/dotnet/core/extensions/logging
+    public IHost Host
     {
-        public static string AppName => System.Reflection.Assembly.GetExecutingAssembly().GetName().Name!;
-        public static string ConfigDir => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppName);
+        get;
+    }
 
-        private void OnStartUp(object sender, StartupEventArgs e)
+    public static T GetService<T>()
+        where T : class
+    {
+        if ((Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
         {
-            if (!Directory.Exists(ConfigDir))
-            {
-                Directory.CreateDirectory(ConfigDir);
-            }
-
-            var mainWindow = new MainWindow();
-            if (mainWindow.DataContext is MainViewModel viewModel)
-            {
-                viewModel.LoadState();
-            }
-
-            mainWindow.Show();
+            throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
         }
+
+        return service;
+    }
+
+    public static WindowEx MainWindow { get; } = new MainWindow();
+
+    public App()
+    {
+        InitializeComponent();
+
+        Host = Microsoft.Extensions.Hosting.Host.
+        CreateDefaultBuilder().
+        UseContentRoot(AppContext.BaseDirectory).
+        ConfigureServices((context, services) =>
+        {
+            // Default Activation Handler
+            services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
+
+            // Other Activation Handlers
+            services.AddTransient<IActivationHandler, AppNotificationActivationHandler>();
+
+            // Services
+            services.AddSingleton<IAppNotificationService, AppNotificationService>();
+            services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
+            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+            services.AddTransient<INavigationViewService, NavigationViewService>();
+
+            services.AddSingleton<IActivationService, ActivationService>();
+            services.AddSingleton<IPageService, PageService>();
+            services.AddSingleton<INavigationService, NavigationService>();
+
+            // Core Services
+            services.AddSingleton<ILogbookService, DatabaseLogbookService>(_ => new DatabaseLogbookService(new LogbookContextService("logbook.db")));
+            //services.AddSingleton<ILogbookService, DummyLogbookService>();
+            services.AddSingleton<IFileService, FileService>();
+
+            // Views and ViewModels
+            services.AddTransient<LogbookPage>();
+            services.AddTransient<LogbookPageViewModel>();
+            services.AddTransient<LogbookViewModel>();
+            services.AddSingleton(RadioViewModelFactory.CreateRadioViewModel(OmniRig1ViewModel.Name));
+
+            services.AddTransient<SettingsPage>();
+            services.AddTransient<SettingsViewModel>();
+            
+            services.AddTransient<ShellPage>();
+            services.AddTransient<ShellViewModel>();
+
+            // Configuration
+            services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+        }).
+        Build();
+
+        GetService<IAppNotificationService>().Initialize();
+
+        UnhandledException += App_UnhandledException;
+    }
+
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        // TODO: Log and handle exceptions as appropriate.
+        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+    }
+
+    protected async override void OnLaunched(LaunchActivatedEventArgs args)
+    {
+        base.OnLaunched(args);
+
+        //GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));
+
+        await GetService<IActivationService>().ActivateAsync(args);
     }
 }
