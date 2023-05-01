@@ -8,9 +8,8 @@
     xmlns:views="using:Logatron.Views"
     d:DataContext="{d:DesignInstance Type=viewmodels:LogbookViewModel}"
     mc:Ignorable="d">
-
     <Grid x:Name="ContentArea" ColumnDefinitions="*" RowDefinitions="Auto, *">
-        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" RowDefinitions="*">
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" RowDefinitions="*" ColumnSpacing="5">
             <views:LogbookEntry Grid.Column="0" ViewModel="{x:Bind ViewModel.LogbookViewModel.EntryEdit, Mode=OneWay}" />
             <views:RadioView Grid.Column="1" ViewModel="{x:Bind ViewModel.RadioViewModel}" />
         </Grid>

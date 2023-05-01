@@ -81,34 +81,13 @@ public partial class LogbookViewModel : ViewModelBase
     [ObservableProperty]
     private int _numberOfEntries = 0;
 
-    public ICommand UpdateLogbookCommand => new AsyncRelayCommand(UpdateLogbook);
-    public ICommand SortingChangedCommand => new AsyncRelayCommand<DataGridColumnEventArgs>(SortingChanged);
-    public ICommand CreateEntryCommand => new AsyncRelayCommand(CreateEntry);
-    public ICommand BeginUpdateEntryCommand => new RelayCommand(BeginUpdateEntry);
-    public ICommand UpdateEntryCommand => new AsyncRelayCommand(UpdateEntry);
-    public ICommand DeleteEntryCommand => new AsyncRelayCommand(DeleteEntry);
-    public ICommand SelectRowCommand => new RelayCommand<RightTappedRoutedEventArgs>(SelectRow);
-    public ICommand ClearCommand => new RelayCommand(Clear);
-    public ICommand GoToFirstPageCommand => new AsyncRelayCommand(GoToFirstPage);
-    public ICommand GoToPreviousPageCommand => new AsyncRelayCommand(GoToPreviousPage);
-    public ICommand GoToPageNumberCommand => new AsyncRelayCommand<int>(GoToPageNumber);
-    public ICommand GoToNextPageCommand => new AsyncRelayCommand(GoToNextPage);
-    public ICommand GoToLastPageCommand => new AsyncRelayCommand(GoToLastPage);
-
     private DataGridColumn? _previousSortingColumn = null;
 
     public LogbookViewModel()
     {
         var logbookService = App.GetService<ILogbookService>();
         _logbook = new Logbook(logbookService);
-        Clear();
     }
-
-    //public LogbookViewModel(Logbook logbook)
-    //{
-    //    _logbook = logbook;
-    //    Clear();
-    //}
 
     public override void LoadState()
     {
@@ -124,6 +103,7 @@ public partial class LogbookViewModel : ViewModelBase
         //Properties.Settings.Default.LogbookPageSize = PageSize;
     }
 
+    [RelayCommand]
     public async Task UpdateLogbook()
     {
         if (CurrentPageNumber > NumberOfPages && CurrentPageNumber > 1)
@@ -138,6 +118,7 @@ public partial class LogbookViewModel : ViewModelBase
         Clear();
     }
 
+    [RelayCommand]
     private async Task SortingChanged(DataGridColumnEventArgs? e)
     {
         if (e == null || e.Column == null || e.Column.Tag == null || e.Column.Tag is not string)
@@ -179,6 +160,7 @@ public partial class LogbookViewModel : ViewModelBase
         OnPropertyChanged(nameof(NumberOfPages));
     }
 
+    [RelayCommand]
     private async Task CreateEntry()
     {
         LogbookEntry entry = new()
@@ -195,6 +177,7 @@ public partial class LogbookViewModel : ViewModelBase
         Clear();
     }
 
+    [RelayCommand]
     private void BeginUpdateEntry()
     {
         if (SelectedEntry == null)
@@ -205,6 +188,7 @@ public partial class LogbookViewModel : ViewModelBase
         EntryEdit = new LogbookEntryEditViewModel(SelectedEntry.Entry, UpdateEntryCommand, ClearCommand);
     }
 
+    [RelayCommand]
     private async Task UpdateEntry()
     {
         LogbookEntry entry = new()
@@ -222,6 +206,7 @@ public partial class LogbookViewModel : ViewModelBase
         Clear();
     }
 
+    [RelayCommand]
     private async Task DeleteEntry()
     {
         if (SelectedEntry == null)
@@ -247,6 +232,7 @@ public partial class LogbookViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
     private void SelectRow(RightTappedRoutedEventArgs? param)
     {
         if (param != null && param.OriginalSource is Microsoft.UI.Xaml.FrameworkElement element)
@@ -255,21 +241,25 @@ public partial class LogbookViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
     private void Clear()
     {
         EntryEdit = new LogbookEntryEditViewModel(CreateEntryCommand, ClearCommand);
     }
 
+    [RelayCommand]
     private async Task GoToFirstPage()
     {
         await GoToPageNumber(1);
     }
 
+    [RelayCommand]
     private async Task GoToPreviousPage()
     {
         await GoToPageNumber(CurrentPageNumber - 1);
     }
 
+    [RelayCommand]
     private async Task GoToPageNumber(int page)
     {
         if (page < 1 || page > NumberOfPages)
@@ -291,11 +281,13 @@ public partial class LogbookViewModel : ViewModelBase
         CurrentPageNumber = page;
     }
 
+    [RelayCommand]
     private async Task GoToNextPage()
     {
         await GoToPageNumber(CurrentPageNumber + 1);
     }
 
+    [RelayCommand]
     private async Task GoToLastPage()
     {
         await GoToPageNumber(NumberOfPages);

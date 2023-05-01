@@ -57,6 +57,13 @@
                                 </MenuFlyoutItem>
 
                                 <MenuFlyoutItem Text="Delete">
+                                    <!--<Flyout>
+                                        <StackPanel>
+                                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items will be removed. Do you want to continue?" Margin="0,0,0,12" />
+                                            <Button Click="DeleteConfirmation_Click" Content="Yes, empty my cart" />
+                                        </StackPanel>
+                                    </Flyout>-->
+
                                     <i:Interaction.Behaviors>
                                         <ic:EventTriggerBehavior EventName="Click">
                                             <ic:InvokeCommandAction Command="{x:Bind ViewModel.DeleteEntryCommand}" />
